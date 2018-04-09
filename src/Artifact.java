@@ -1,18 +1,22 @@
 
 public class Artifact {
 	
-	private char itemName;
+	private String itemName;
 	private int uniqueID;
-	private char itemShortName;
-	private char description;
-	private char type;
+	private String itemShortName;
+	private String description;
+	private String type;
 	private int listOfActions;
 	
-	public char examineItem() {
-		
+	public String examineItem() {
+		return description;
 	}
 	
-	public char getName() {
-		
+	public String getName() {
+		return itemName;
+	}
+	
+	public int getUID() {
+		return uniqueID;
 	}
 }

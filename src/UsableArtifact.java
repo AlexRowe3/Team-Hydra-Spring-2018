@@ -1,7 +1,7 @@
 
 public class UsableArtifact extends Artifact{
 	
-	private char usage;
+	private String usage;
 	
 	public void useArtifact() {
 		
