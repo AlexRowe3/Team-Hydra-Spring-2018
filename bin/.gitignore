@@ -1,2 +1,11 @@
 /example1.class
 /Character.class
+/view/
+/Player.class
+/Monster.class
+/Room.class
+/GenericItem.class
+/Useable.class
+/Weapon.class
+/Consumable.class
+/Puzzle.class
