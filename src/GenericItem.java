@@ -1,16 +1,18 @@
 
 public class GenericItem {
 	
-	private char itemName;
+	private String itemName;
 	private int uniqueID;
-	private char itemShortName;
-	private char description;
+	private String itemShortName;
+	private String description;
 	
-	public char examineItem() {
+	public String examineItem() {
+		return description;
 		
 	}
 	
-	public char getName() {
+	public String getName() {
+		return itemName;
 		
 	}
 	

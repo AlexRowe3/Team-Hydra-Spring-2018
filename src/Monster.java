@@ -1,6 +1,6 @@
 
 public class Monster extends Character{
 	
-	private char monsterShortName;
+	private String monsterShortName;
 
 }

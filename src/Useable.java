@@ -1,7 +1,7 @@
 
 public class Useable extends GenericItem{
 	
-	private char usage;
+	private String usage;
 	
 	public void use() {
 		

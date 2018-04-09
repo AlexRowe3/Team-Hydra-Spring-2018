@@ -3,24 +3,28 @@ public class Puzzle {
 	
 	private int puzzleUniqueID;
 	private Room location;
-	private char description;
-	private char puzzleQuestion;
-	private char puzzleSolution;
-	private char puzzleHint;
+	private String description;
+	private String puzzleQuestion;
+	private String puzzleSolution;
+	private String puzzleHint;
 	
 	public boolean checkSolution() {
+		return true;
 		
 	}
 	
-	public char getDescription() {
+	public String getDescription() {
+		return description;
 		
 	}
 	
-	public char getQuestion() {
+	public String getQuestion() {
+		return puzzleQuestion;
 		
 	}
 	
-	public char getHint() {
+	public String getHint() {
+		return puzzleHint;
 		
 	}
 }

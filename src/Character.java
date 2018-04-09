@@ -1,18 +1,21 @@
 public class Character {
 	private int player;
-	private char name;
+	private String name;
 	private int healthPoints;
 	private int strength;
 	private int defense;
 	private GenericItem[] heldItems;
-	private Artifact[] heldArtifacts;
+	//private Artifact[] heldArtifacts;
 	private int experience;
+	private String description;
 	
-	public char getName() {
+	public String getName() {
+		return name;
 		
 	}
 	
 	public int getHealth() {
+		return healthPoints;
 		
 	}
 	
@@ -21,18 +24,22 @@ public class Character {
 	}
 	
 	public int getExperience() {
+		return experience;
 		
 	}
 	
 	public int getDefense() {
+		return defense;
 		
 	}
 	
 	public int getStrength() {
+		return strength;
 		
 	}
 	
-	public char getDescription() {
+	public String getDescription() {
+		return name;
 		
 	}
 	

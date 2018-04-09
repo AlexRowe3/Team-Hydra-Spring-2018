@@ -7,6 +7,7 @@ public class Player extends Character{
 	private Room currentRoom;
 	
 	public Room getCurrentRoom() {
+		return currentRoom;
 		
 	}
 	
