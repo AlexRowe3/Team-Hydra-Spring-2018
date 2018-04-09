@@ -9,3 +9,7 @@
 /Weapon.class
 /Consumable.class
 /Puzzle.class
+/Artifact.class
+/ConsumableArtifact.class
+/WeaponArtifact.class
+/UsableArtifact.class
