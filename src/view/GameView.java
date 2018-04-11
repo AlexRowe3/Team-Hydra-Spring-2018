@@ -3,7 +3,10 @@ package view;
 import java.util.Observable;
 import java.util.Observer;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -13,6 +16,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+// This import is needed for the Action listeners as well as the Room connection indexes.
+import model.Room;
 /**
  * @author William Bullock
  * @version 0.1
@@ -72,7 +78,7 @@ public class GameView implements Observer {
 		//TODO: get a good image, and make this image a little dynamic maybe?
 		// Dynamic would take many images.
 		
-		
+		//TODO: Likely need to take this out of the method and fill it elsewhere, possibly a different method.
 		ListView<String> textOutputLView = new ListView<>();
 		textOutputLView.setPrefSize(600, 200);
 		textOutputLView.autosize();
@@ -121,13 +127,42 @@ public class GameView implements Observer {
 		
 		VBox directionsVBox = new VBox();
 		
-		//generateDirectionButton(Room.NORTHEAST);
+		HBox topDirectionsHBox = new HBox();
+		
+		topDirectionsHBox.getChildren().addAll(generateDirectionButton(Room.NORTHWEST, "NW"), generateDirectionButton(Room.NORTH, "N"), generateDirectionButton(Room.NORTHEAST, "NE"));
+		
+		HBox midDirectionsHBox = new HBox();
+		
+		Label directionsLbl = new Label("Directions");
+		
+		midDirectionsHBox.getChildren().addAll(generateDirectionButton(Room.WEST, "W"), directionsLbl, generateDirectionButton(Room.EAST, "E"));
+		
+		HBox botDirectionsHBox = new HBox();
+		
+		botDirectionsHBox.getChildren().addAll(generateDirectionButton(Room.SOUTHWEST, "SW"), generateDirectionButton(Room.SOUTH, "S"), generateDirectionButton(Room.SOUTHEAST, "SE"));
+		
+		directionsVBox.getChildren().addAll(topDirectionsHBox, midDirectionsHBox, botDirectionsHBox);
 		
 		directionsPane.getChildren().add(directionsVBox);
 		
 		PlayerInfoInventoryDirectionsVBox.getChildren().addAll(playerInfoHBox, playerInventoryLView, directionsPane);
 		
 		return PlayerInfoInventoryDirectionsVBox;
+	}
+
+	private Node generateDirectionButton(int northeast, String string) {
+		Button button = new Button(string);
+		
+		button.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				//TODO: Fill the action listener
+			}
+			
+		});
+		
+		return button;
 	}
 
 	// TODO: add a constructor that accepts a save, so that it can immediately load to the save on open
