@@ -1,0 +1,88 @@
+Name:"Liopleurodon"
+ShortName:"LPDN"
+Description:"An ancient terror. You disturbed its slumber. You may want to run."
+Health:21
+Damage:12
+DEF:9
+Experience:30
+Items:""
+Name:"Anglerfish"
+ShortName:"ANGF"
+Description:"A little trickster fish that lures smaller fish in with a bright, mesmerizing light."
+Health:11
+Damage:4
+DEF:4
+Experience:6
+Items:""
+Name:"Shark"
+ShortName:"SHRK"
+Description:"So many teeth...is there something shiny in between?"
+Health:18
+Damage:8
+DEF:6
+Experience:10
+Items:"Storage Room Key"
+Name:"Jellyfish"
+ShortName:"JYFS"
+Description:"Kind of slow, doesn’t look strong, but it has a sting."
+Health:5
+Damage:15
+DEF:5
+Experience:3
+Items:""
+Name:"Mobby Dick"
+ShortName:"MBDK"
+Description:"For some reason you have the urge to chase this whale."
+Health:32
+Damage:14
+DEF:9
+Experience:35
+Items:"WRCH"
+Name:"Giant Squid"
+ShortName:"GNSQ"
+Description:"A big ol’ squid that wants to eat you whole."
+Health:28
+Damage:12
+DEF:8
+Experience:30
+Items:""
+Name:"Nessie"
+ShortName:"NESS"
+Description:"HOLY CRAP, NESSIE IS REAL? ...aren’t we in the ocean?"
+Health:21
+Damage:12
+DEF:9
+Experience:30
+Items:""
+Name:"Blobfish"
+ShortName:"BLFS"
+Description:"A gelatin-like fish. It always looks upset for some reason."
+Health:7
+Damage:4
+DEF:6
+Experience:5
+Items:""
+Name:"Tunafish"
+ShortName:"TNFS"
+Description:"This guy looks tasty."
+Health:12
+Damage:6
+DEF:4
+Experience:12
+Items:"TNMT"
+Name:"Narwhals"
+ShortName:"NWLS"
+Description:"He looks a little long in the tooth."
+Health:24
+Damage:14
+DEF:7
+Experience:24
+Items:""
+Name:"Swordfish"
+ShortName:"SDFS"
+Description:"A band of swordfish. Looks like there could be 20 of them."
+Health:14
+Damage:10
+DEF:6
+Experience:15
+Items:"SFMT"
