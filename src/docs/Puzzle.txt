@@ -1,0 +1,65 @@
+~
+UniqueID"PZ01"
+Location:"Craft Room"
+Description:”A simple algebraic expression. Looks like you need to solve for x. ”
+Puzzle:”2x - 9 = 21 ”
+Solution:"15"
+Hint:"Try isolating the x."
+Correct Answer:"Player receives the Navigation Room Key"
+Incorrect Answer:"The player may try again"
+~
+UniqueID"PZ02"
+Location:"Cavern 4"
+Description:”A dumbo octopus swims in your path. He has a riddle for you.”
+Puzzle:”What kind of kind of fish goes well with peanut butter?”
+Solution:"Jellyfish"
+Hint:"If you tried to eat it, it would sting."
+Correct Answer:"Player can choose to pick up the dart gun"
+Incorrect Answer:"The dumbo octopus slams itself into the player. The player loses 2 health."
+~
+UniqueID"PZ03"
+Location:"Cavern 15"
+Description:”You touch the statue and a beautiful voice comes from within.”
+Puzzle:”What kind of fish can you find in Heaven?”
+Solution:"Angelfish"
+Hint:"The statue’s voice reminds you of lore about a graceful spiritual being."
+Correct Answer:"Player receives the medkit"
+Incorrect Answer:"An opening appears at the stomach of the statue and the medkit is pushed inside"
+~
+UniqueID"PZ04"
+Location:"Cavern 20"
+Description:”You see a rusty chest in the middle of the cavern. Incrusted on its surface reveals a palindrome. ”
+Puzzle:”Back to front, I am the same, come to think of it so is my name. ”
+Solution:"Kayak"
+Hint:"I float on the water and carry people."
+Correct Answer:"Player receives a Med Kit"
+Incorrect Answer:"Unfortunately this old chest is on top of muddy quicksand for ages that it started to sink down into the murky ground. Never to be seen again."
+~
+UniqueID"PZ05"
+Location:"Cavern 10"
+Description:”Reflection all around, you looked down to see a image of you below. You think that you are hallucinating because the reflection seems to be talking back.”
+Puzzle:”I’m made of glass, this much is true, but when you look, you won’t see through.”
+Solution:"Mirror"
+Hint:"Reflect on this hint, and you’ll find a clue."
+Correct Answer:"Player receives metal sheet (x5)"
+Incorrect Answer:"The player can try again. "
+~
+UniqueID"PZ06"
+Location:"Cavern 6"
+Description:”While looking at the marvels of a lost civilization, you stumble upon some wall writing. At least you can translate.”
+Puzzle:”What word describes a slab-like top supported on one or more legs or other supports?”
+Solution:"Table"
+Hint:"Serves food, and doesn’t run. If you are able to get this hint, you would need a “T”. "
+Correct Answer:"Player receives Nuts and Bolts (5x) "
+Incorrect Answer:"The water within the area starts reacting and rushes towards the ancient civilization. You were alright, but the writings on the ancient walls were no longer there. You even forgot what was on it as well."
+~
+UniqueID"PZ07"
+Location:"Navigation Room (After the breach has been repaired and the player uses the submarine key)"
+Description:”A riddle appears on a screen in the navigation room. The submarine won’t move until it is solved.”
+Puzzle:”What is the most valuable type of fish?”
+Solution:"Goldfish"
+Hint:"A valuable type of material."
+Correct Answer:"Player finishes the game"
+Incorrect Answer:"The player may try again"
+~
+:""
