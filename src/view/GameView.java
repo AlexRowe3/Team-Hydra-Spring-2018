@@ -16,7 +16,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
+import model.GenericItem;
 // This import is needed for the Action listeners as well as the Room connection indexes.
 import model.Room;
 /**
@@ -29,6 +29,11 @@ import model.Room;
  * so that it can initiate changes in the model.
  */
 public class GameView implements Observer {
+	
+	// TODO: Bring the class-wide edited values out of their methods so that we can use them intra-method.
+	ListView<String> textOutputLView = new ListView<>();
+	//List for inventory with scrollbar
+	ListView<GenericItem> playerInventoryLView = new ListView<>();
 	
 	public GameView() {
 		Stage stage = new Stage();
@@ -57,14 +62,15 @@ public class GameView implements Observer {
 	
 	// Creates the VBox that stores the Map image and the dynamic interaction buttons
 	private VBox generateMapButtonsVBox() {
-		// TODO Auto-generated method stub
-		
 		VBox MapButtonsVBox = new VBox();
+		
+		// TODO: Add the map
 		
 		ListView<Button> dynamicBtnLView = new ListView<>();
 		
 		// TODO: Add the buttons
 		
+		// TODO: Add the map node to the VBox
 		MapButtonsVBox.getChildren().addAll(dynamicBtnLView);
 		
 		return MapButtonsVBox;
@@ -119,9 +125,6 @@ public class GameView implements Observer {
 		
 		playerInfoHBox.getChildren().addAll(staticLabelsVBox, dynamicLabelsVBox);
 		// Player Info Box done
-		
-		//List for inventory with scrollbar
-		ListView<String> playerInventoryLView = new ListView<>();
 		
 		//Pane with 8 buttons for direction commands
 		Pane directionsPane = new Pane();
