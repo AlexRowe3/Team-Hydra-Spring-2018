@@ -7,6 +7,15 @@ public class GenericItem {
 	private String itemShortName;
 	private String description;
 	
+	public GenericItem(String itemName, int uniqueID, String itemShortName, String description) {
+		
+		this.itemName = itemName;
+		this.uniqueID = uniqueID;
+		this.itemShortName = itemShortName;
+		this.description = description;
+		
+	}
+	
 	public String examineItem() {
 		return description;
 		

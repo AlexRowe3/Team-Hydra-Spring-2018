@@ -9,6 +9,17 @@ public class Puzzle {
 	private String puzzleSolution;
 	private String puzzleHint;
 	
+	public Puzzle(int puzzleUniqueID, Room location, String description, String puzzleQuestion, String puzzleSolution,
+			String puzzleHint) {
+		this.puzzleUniqueID = puzzleUniqueID;
+		this.location = location;
+		this.description = description;
+		this.puzzleQuestion = puzzleQuestion;
+		this.puzzleSolution = puzzleSolution;
+		this.puzzleHint = puzzleHint;
+	}
+	
+	
 	public boolean checkSolution() {
 		return true;
 		

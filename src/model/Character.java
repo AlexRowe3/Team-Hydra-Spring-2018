@@ -13,6 +13,19 @@ public class Character extends Observable {
 	private int experience;
 	private String description;
 	
+	public Character(int player, String name, int healthPoints, int strength, int defense, GenericItem[] heldItems,
+			int experience, String description) {
+		this.player = player;
+		this.name = name;
+		this.healthPoints = healthPoints;
+		this.strength = strength;
+		this.defense = defense;
+		this.heldItems = heldItems;
+		this.experience = experience;
+		this.description = description;
+	}
+	
+	
 	public String getName() {
 		return name;
 		

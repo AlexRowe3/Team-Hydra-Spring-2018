@@ -12,6 +12,7 @@ public class Room {
 	//private Artifact[] artifacts;
 	private Room[] connectedRooms;
 	
+	
 	//List of values representing each direction in the code. for use in the connected rooms check
 	public static final int NORTH = 0;
 	public static final int NORTHEAST = 1;
@@ -22,6 +23,17 @@ public class Room {
 	public static final int WEST = 6;
 	public static final int NORTHWEST = 7;
 	
+	public Room (int roomUniqueID, String roomName, int roomType, String roomDescription, int roomItems, 
+			String roomSearch, Character[] characters, Room[] connectedRooms) {
+		this.roomUniqueID = roomUniqueID;
+		this.roomName = roomName;
+		this.roomType = roomType;
+		this.roomDescription = roomDescription;
+		this.roomItems = roomItems;
+		this.roomSearch = roomSearch;
+		this.characters = characters;
+		this.connectedRooms = connectedRooms;
+	}
 	
 	public String getDescription() {
 		return roomDescription;
