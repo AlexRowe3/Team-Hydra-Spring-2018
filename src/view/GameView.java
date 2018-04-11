@@ -53,6 +53,7 @@ public class GameView implements Observer {
 		stage.setResizable(false);
 		stage.show();
 	}
+	// TODO: add a constructor that accepts a save, so that it can immediately load to the save on open
 	
 	// Creates the VBox that stores the Map image and the dynamic interaction buttons
 	private VBox generateMapButtonsVBox() {
@@ -62,7 +63,7 @@ public class GameView implements Observer {
 		
 		ListView<Button> dynamicBtnLView = new ListView<>();
 		
-		// TODO: Add the buttons that are on by default.
+		// TODO: Add the buttons
 		
 		MapButtonsVBox.getChildren().addAll(dynamicBtnLView);
 		
@@ -150,8 +151,8 @@ public class GameView implements Observer {
 		return PlayerInfoInventoryDirectionsVBox;
 	}
 
-	private Node generateDirectionButton(int northeast, String string) {
-		Button button = new Button(string);
+	private Node generateDirectionButton(int direction, String directionLabel) {
+		Button button = new Button(directionLabel);
 		
 		button.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -164,8 +165,6 @@ public class GameView implements Observer {
 		
 		return button;
 	}
-
-	// TODO: add a constructor that accepts a save, so that it can immediately load to the save on open
 
 	@Override
 	public void update(Observable arg0, Object arg1) {

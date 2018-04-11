@@ -1,6 +1,8 @@
 package model;
 
-public class Character {
+import java.util.Observable;
+
+public class Character extends Observable {
 	private int player;
 	private String name;
 	private int healthPoints;

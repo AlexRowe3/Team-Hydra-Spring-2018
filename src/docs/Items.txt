@@ -1,0 +1,95 @@
+ItemName:"Harpoon Gun"
+ShortName:”HPGN”
+Description:”A shiny new harpoon gun”
+Type:”Weapon”
+Strength:12
+Attack Bonus:2
+~
+ItemName:"Dart Gun"
+ShortName:”DTGN”
+Description:”A simple dart pistol that has seen better days. It will probably take care of all but the biggest threats.”
+Type:”Weapon”
+Strength:5
+Attack Bonus:1
+~
+ItemName:"Bowie Knife"
+ShortName:”BWKN”
+Description:”A knife, engraved with your initials on the blade. It’s better than nothing.”
+Type:”Weapon”
+Strength:3
+Attack Bonus:0
+~
+ItemName:"Scuba Suit"
+ShortName:”SCST”
+Description:”A simple scuba suit. It won’t stop much from hurting you.”
+Type:”Armor”
+Strength:16
+Attack Bonus:
+~
+ItemName:"Armored Scuba Suit"
+ShortName:”ASCST”
+Description:”It looks like someone stitched metal plates onto a basic scuba suit. Odd as that may be, it looks like it will help you stay alive”
+Type:”Armor”
+Strength:16
+Attack Bonus:
+~
+~ItemName:"Storage Room Key"
+~ShortName:”STRK”
+~Description:”How did this key card get out here?”
+~Type:”Key”
+~Usage:”Unlocks the storage room (ENTER ROOM ID)”
+~
+ItemName:"Harpoon Gun Blueprint"
+ShortName:”HGBP”
+Description:”A blueprint describing how to craft a harpoon gun. It looks like you need 80 metal pieces”
+Type:”Blueprint”
+~
+ItemName:"Metal Sheet Blueprint"
+ShortName:”MSBP”
+Description:”A blueprint describing how to craft a metal sheet. It looks like you need 20 metal pieces, 10 nuts and bolts, and a wrench.”
+Type:”Blueprint”
+~
+ItemName:"Metal Pieces"
+ShortName:”MTPS”
+Description:”Tiny pieces of metal that don’t have much use on their own.”
+Type:”Crafting Item”
+~
+ItemName:"Nuts and bolts"
+ShortName:”NTBT”
+Description:”Small nuts and bolts that can help hold metal together.”
+Type:”Crafting Item”
+~
+ItemName:"Metal Sheet"
+ShortName:”MTST”
+Description:”A large piece of metal made from metal pieces. Looks like you just need a way to stick it to wall.”
+Type:”Crafting Item”
+~
+ItemName:"Duct Tape"
+ShortName:”DCTP”
+Description:”A strong dark adhesive that can fix pretty much anything.”
+Type:”Crafting Item”
+~
+ItemName:"Wrench"
+ShortName:”WRCH”
+Description:”A metal tool used to fasten nuts and bolts.”
+Type:”Crafting Item”
+~
+ItemName:"Tuna Meat"
+ShortName:”TNMT”
+Description:”Small pinkish chunks of meat from a large tuna.”
+Type:”Consumable”
+Effect:5
+~
+ItemName:"Swordfish Meat"
+ShortName:”SFMT”
+Description:”Large cuts of meat from a swordfish.”
+Type:”Consumable”
+Usage:”Heals the player”
+Effect:10
+~
+ItemName:"MedKit"
+ShortName:”MDKT”
+Description:”A small white and green box filled with all the essentials for taking care of injuries.”
+Type:”Consumable”
+Usage:”Heals the player”
+Effect:15
