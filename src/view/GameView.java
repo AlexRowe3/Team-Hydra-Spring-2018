@@ -13,7 +13,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 /**
  * @author William Bullock
  * @version 0.1
@@ -117,8 +116,16 @@ public class GameView implements Observer {
 		//List for inventory with scrollbar
 		ListView<String> playerInventoryLView = new ListView<>();
 		
+		//Pane with 8 buttons for direction commands
+		Pane directionsPane = new Pane();
 		
-		PlayerInfoInventoryDirectionsVBox.getChildren().addAll(playerInfoHBox, playerInventoryLView);
+		VBox directionsVBox = new VBox();
+		
+		//generateDirectionButton(Room.NORTHEAST);
+		
+		directionsPane.getChildren().add(directionsVBox);
+		
+		PlayerInfoInventoryDirectionsVBox.getChildren().addAll(playerInfoHBox, playerInventoryLView, directionsPane);
 		
 		return PlayerInfoInventoryDirectionsVBox;
 	}

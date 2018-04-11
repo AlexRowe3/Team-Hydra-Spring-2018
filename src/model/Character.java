@@ -1,3 +1,5 @@
+package model;
+
 public class Character {
 	private int player;
 	private String name;
