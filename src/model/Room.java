@@ -1,16 +1,18 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Room {
 	
-	private int roomUniqueID;
+	private String roomUniqueID;
 	private String roomName;
-	private int roomType;
+	private String roomType;
 	private String roomDescription;
-	private int roomItems;
+	private ArrayList<GenericItem> roomItems;
 	private String roomSearch;
 	private Character[] characters;
 	//private Artifact[] artifacts;
-	private Room[] connectedRooms;
+	private Door[] doors;
 	
 	
 	//List of values representing each direction in the code. for use in the connected rooms check
@@ -23,8 +25,8 @@ public class Room {
 	public static final int WEST = 6;
 	public static final int NORTHWEST = 7;
 	
-	public Room (int roomUniqueID, String roomName, int roomType, String roomDescription, int roomItems, 
-			String roomSearch, Character[] characters, Room[] connectedRooms) {
+	public Room (String roomUniqueID, String roomName, String roomType, String roomDescription, ArrayList<GenericItem> roomItems, 
+			String roomSearch, Character[] characters, Door[] doors) {
 		this.roomUniqueID = roomUniqueID;
 		this.roomName = roomName;
 		this.roomType = roomType;
@@ -32,7 +34,12 @@ public class Room {
 		this.roomItems = roomItems;
 		this.roomSearch = roomSearch;
 		this.characters = characters;
-		this.connectedRooms = connectedRooms;
+		this.doors = doors;
+	}
+	
+	public String getUID() {
+		return roomUniqueID;
+		
 	}
 	
 	public String getDescription() {
@@ -57,11 +64,19 @@ public class Room {
 	
 	public boolean checkDirection(int direction) {
 		
-		if(connectedRooms[direction].equals(null)) {
+		if(doors[direction].equals(null)) {
 			return false;
 		}
 		return true;
 		
+	}
+	
+	public String getType() {
+		return roomType;
+	}
+	
+	public ArrayList<GenericItem> getRoomItems() {
+		return roomItems;
 	}
 	
 }

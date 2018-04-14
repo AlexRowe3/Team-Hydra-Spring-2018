@@ -28,6 +28,10 @@ public class Model extends Observable implements Serializable {
 	
 	public Model() {
 		loadNewGame();
+		
+		for(int i = 0; i < rooms.size(); i++) {
+			System.out.println(rooms.get(i).getUID());
+		}
 	}
 	//TODO: Add a constructor to load a game? Might not need as we can load the object from a .bin save
 
@@ -76,10 +80,36 @@ public class Model extends Observable implements Serializable {
 			
 			while((line = bufferedReader.readLine()) != null) {
 				
-				/* debug TODO: remove this line when appropriate */ System.out.println(line);
-				
-				
-				rooms.add(new Room(0, line, 0, line, 0, line, null, null));
+				// Check if the line starts with the comment symbol. If it does, just move on, otherwise, read in the line
+				if(!line.startsWith("~")) {
+					
+					String UID = line.substring(5, line.length()-1);
+					line = bufferedReader.readLine();
+					
+					String Name = line.substring(6, line.length()-1);
+					line = bufferedReader.readLine();
+					
+					String Type = line.substring(6, line.length()-1);
+					line = bufferedReader.readLine();
+					
+					String description = line.substring(13, line.length()-1);
+					line = bufferedReader.readLine();
+					
+					//TODO: build an items interpreter method for this
+					ArrayList<GenericItem> items = new ArrayList<GenericItem>();
+					line = bufferedReader.readLine();
+					
+					String search = line.substring(8, line.length()-1);
+					line = bufferedReader.readLine();
+					
+					//TODO: build a doors interpreter method for this
+					Door[] doors = new Door[8];
+					line = bufferedReader.readLine();
+					
+					Character[] monsters = {};
+					
+					rooms.add(new Room(UID, Name, Type, description, items, search, monsters, doors));
+				}
 			}
 			
 			bufferedReader.close();
@@ -103,7 +133,11 @@ public class Model extends Observable implements Serializable {
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			
 			while((line = bufferedReader.readLine()) != null) {
-				System.out.println(line);
+				if(!line.startsWith("~")) {
+					
+					
+					
+				}
 			}
 			
 			bufferedReader.close();
