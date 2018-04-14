@@ -24,14 +24,12 @@ ShortName:”SCST”
 Description:”A simple scuba suit. It won’t stop much from hurting you.”
 Type:”Armor”
 Strength:16
-Attack Bonus:
 ~
 ItemName:"Armored Scuba Suit"
 ShortName:”ASCST”
 Description:”It looks like someone stitched metal plates onto a basic scuba suit. Odd as that may be, it looks like it will help you stay alive”
 Type:”Armor”
 Strength:16
-Attack Bonus:
 ~
 ~ItemName:"Storage Room Key"
 ~ShortName:”STRK”

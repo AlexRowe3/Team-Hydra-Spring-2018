@@ -13,9 +13,9 @@ import java.io.FileNotFoundException;
 
 /**
  * @author William Bullock
- * @version 0.1
+ * @version 0.1.1
  * Written: April 11th, 2018
- * 
+ * Last Updated: April 14th, 2018
  * This is the over-arching Model class for interaction with the model.
  * It is basically how I imagine some APIs to be like.
  */
@@ -28,12 +28,7 @@ public class Model extends Observable implements Serializable {
 	
 	public Model() {
 		loadNewGame();
-		
-		for(int i = 0; i < rooms.size(); i++) {
-			System.out.println(rooms.get(i).getUID());
-		}
 	}
-	//TODO: Add a constructor to load a game? Might not need as we can load the object from a .bin save
 
 	private void loadNewGame() {
 		
@@ -63,12 +58,7 @@ public class Model extends Observable implements Serializable {
 		// I left the ID as 0 for now, not sure if I need to do something else with it just yet.
 		player = new Player(0, name, hp, strength, defense, inventory, experience, description, armor, weapon, level, room);
 	}
-
-	private Room getRoom(String string) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	private void loadNewRooms() {
 		// TODO: make this actually read the Room information and generate Room Objects into the Rooms arraylist
 		String fileName = ".\\src\\docs\\Rooms.txt";
@@ -124,7 +114,6 @@ public class Model extends Observable implements Serializable {
 	}
 
 	private void loadNewItems() {
-		// TODO Auto-generated method stub
 		String fileName = ".\\src\\docs\\Items.txt";
 		String line = null;
 		
@@ -133,9 +122,37 @@ public class Model extends Observable implements Serializable {
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			
 			while((line = bufferedReader.readLine()) != null) {
+				
 				if(!line.startsWith("~")) {
 					
+					String itemName = line.substring(10, line.length()-1);
+					line = bufferedReader.readLine();
 					
+					String shortName = line.substring(11, line.length()-1);
+					line = bufferedReader.readLine();
+					
+					String description = line.substring(13, line.length()-1);
+					line = bufferedReader.readLine();
+					
+					String type = line.substring(6, line.length());
+					
+					if(type == "Weapon") {
+						
+						line = bufferedReader.readLine();
+						
+					} else if (type == "Armor") {
+						
+						line = bufferedReader.readLine();
+						
+					} else if (type == "Blueprint") {
+						
+					} else if (type == "Consumable") {
+						
+						line = bufferedReader.readLine();
+						
+					} else if (type == "Crafting Item") {
+						
+					}
 					
 				}
 			}
@@ -149,5 +166,22 @@ public class Model extends Observable implements Serializable {
 		}
 		
 	}
+	
+	/* HERE STARTS THE PUBLIC METHODS, FOR USE WITH ANYTHING THAT NEEDS TO TELL THE MODEL WHAT TO DO, OR TO GET INFORMATION FROM IT. */
+	
+	/**
+	 * Method: getRoom(String)
+	 * @param roomID the rooms UID that you are trying to get
+	 * @return returns the actual room that you requested, or null if such a room does not exist.
+	 */
+	public Room getRoom(String roomID) {
+		for(int i = 0; i < rooms.size(); i++) {
+			if(rooms.get(i).getUID().equals(roomID)) {
+				return rooms.get(i);
+			}
+		}
+		return null;
+	}
+
 
 }

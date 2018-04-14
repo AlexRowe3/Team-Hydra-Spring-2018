@@ -8,11 +8,10 @@ public class Consumable extends GenericItem{
 		
 		super(itemName, effect, itemShortName, description);
 		this.effect = effect;
-		
 	}
 	
-	public void consume() {
-		
+	public int consume() {
+		return effect;
 	}
 
 }
