@@ -7,11 +7,11 @@ import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import model.Model;
 
 /**
  * 
@@ -80,6 +80,8 @@ public class StartupView extends Application{
 			@Override
 			public void handle(ActionEvent arg0) {
 				GameView gameview = new GameView();
+				Model model = new Model();
+				model.addObserver(gameview);
 				stage.hide();
 			}
 			
