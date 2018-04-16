@@ -10,10 +10,10 @@ public class Player extends Character{
 	// when we tell them we updated the player.
 	private boolean roomChanged;
 	
-	public Player(int player, String name, int healthPoints, int strength, int defense, GenericItem[] heldItems,
+	public Player(String UID, String name, int healthPoints, int strength, int defense, GenericItem[] heldItems,
 			int experience, String description, GenericItem equippedArmor, GenericItem equippedWeapon, int level,
 			Room currentRoom) {
-		super(player, name, healthPoints, strength, defense, heldItems, experience, description);
+		super(UID, name, healthPoints, strength, defense, heldItems, experience, description);
 		this.equippedArmor = equippedArmor;
 		this.equippedWeapon = equippedWeapon;
 		this.level = level;

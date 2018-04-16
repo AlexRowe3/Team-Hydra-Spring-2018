@@ -56,7 +56,7 @@ public class Model extends Observable implements Serializable {
 		Room room = getRoom("SR01");
 		
 		// I left the ID as 0 for now, not sure if I need to do something else with it just yet.
-		player = new Player(0, name, hp, strength, defense, inventory, experience, description, armor, weapon, level, room);
+		player = new Player("PL01" /* I'm setting this as the UID of the player*/, name, hp, strength, defense, inventory, experience, description, armor, weapon, level, room);
 	}
 	
 	private void loadNewRooms() {

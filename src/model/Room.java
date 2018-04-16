@@ -26,7 +26,7 @@ public class Room {
 	public static final int NORTHWEST = 7;
 	
 	public Room (String roomUniqueID, String roomName, String roomType, String roomDescription, ArrayList<GenericItem> roomItems, 
-			String roomSearch, Character[] characters, Door[] doors) {
+			String roomSearch, Character[] characters) {
 		this.roomUniqueID = roomUniqueID;
 		this.roomName = roomName;
 		this.roomType = roomType;
@@ -34,7 +34,6 @@ public class Room {
 		this.roomItems = roomItems;
 		this.roomSearch = roomSearch;
 		this.characters = characters;
-		this.doors = doors;
 	}
 	
 	public String getUID() {
@@ -62,6 +61,14 @@ public class Room {
 		
 	}
 	
+	public String getType() {
+		return roomType;
+	}
+	
+	public ArrayList<GenericItem> getRoomItems() {
+		return roomItems;
+	}
+	
 	public boolean checkDirection(int direction) {
 		
 		if(doors[direction].equals(null)) {
@@ -71,12 +78,12 @@ public class Room {
 		
 	}
 	
-	public String getType() {
-		return roomType;
+	public Door getDoor(int direction) {
+		return doors[direction];
 	}
-	
-	public ArrayList<GenericItem> getRoomItems() {
-		return roomItems;
+
+	public void addDoor(Door door, int direction) {
+		doors[direction] = door;
 	}
 	
 }

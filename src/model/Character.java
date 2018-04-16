@@ -3,7 +3,7 @@ package model;
 import java.util.Observable;
 
 public class Character extends Observable {
-	private int player;
+	private String UID;
 	private String name;
 	private int healthPoints;
 	private int strength;
@@ -13,9 +13,9 @@ public class Character extends Observable {
 	private int experience;
 	private String description;
 	
-	public Character(int player, String name, int healthPoints, int strength, int defense, GenericItem[] heldItems,
+	public Character(String UID, String name, int healthPoints, int strength, int defense, GenericItem[] heldItems,
 			int experience, String description) {
-		this.player = player;
+		this.UID = UID;
 		this.name = name;
 		this.healthPoints = healthPoints;
 		this.strength = strength;

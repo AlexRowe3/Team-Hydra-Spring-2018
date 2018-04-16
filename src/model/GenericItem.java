@@ -26,4 +26,12 @@ public class GenericItem {
 		
 	}
 	
+	public String getShortName() {
+		return itemShortName;
+	}
+	
+	public int getUID() {
+		return uniqueID;
+	}
+	
 }
