@@ -2,6 +2,8 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Observable;
 // Used for reading the default game state from files.
 import java.io.FileReader;
@@ -22,9 +24,13 @@ import java.io.FileNotFoundException;
 public class Model extends Observable implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
+	// The player's information
 	private Player player;
+	
+	// The list of all the objects in the game. At least one copy of each
 	private ArrayList<Room> rooms = new ArrayList<Room>();
 	private ArrayList<GenericItem> items = new ArrayList<GenericItem>();
+	private ArrayList<Monster> monsters = new ArrayList<Monster>();
 	
 	public Model() {
 		loadNewGame();
@@ -34,9 +40,47 @@ public class Model extends Observable implements Serializable {
 		
 		loadNewItems();
 		
+		loadNewMonsters();
+		
 		loadNewRooms();
 		
+		loadNewDoors();
+		
+		loadNewPuzzles();
+		
 		loadNewPlayer();
+		
+	}
+
+	private void loadNewMonsters() {
+		// TODO Auto-generated method stub
+		String fileName = ".\\src\\docs\\Monsters.txt";
+		String line = null;
+		
+		try {
+			FileReader fileReader = new FileReader(fileName);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			
+			while((line = bufferedReader.readLine()) != null) {
+				
+			}
+			
+			bufferedReader.close();
+			fileReader.close();
+		} catch(FileNotFoundException ex) {
+			ex.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void loadNewPuzzles() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void loadNewDoors() {
+		// TODO Auto-generated method stub
 		
 	}
 
@@ -60,12 +104,11 @@ public class Model extends Observable implements Serializable {
 	}
 	
 	private void loadNewRooms() {
-		// TODO: make this actually read the Room information and generate Room Objects into the Rooms arraylist
 		String fileName = ".\\src\\docs\\Rooms.txt";
 		String line = null;
 		
 		try {
-			FileReader fileReader = new FileReader(new File(fileName));
+			FileReader fileReader = new FileReader(fileName);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			
 			while((line = bufferedReader.readLine()) != null) {
@@ -85,20 +128,17 @@ public class Model extends Observable implements Serializable {
 					String description = line.substring(13, line.length()-1);
 					line = bufferedReader.readLine();
 					
-					//TODO: build an items interpreter method for this
-					ArrayList<GenericItem> items = new ArrayList<GenericItem>();
+					ArrayList<GenericItem> roomItems = new ArrayList<GenericItem>();
+					roomItems.addAll(Arrays.asList(retrieveItems(line.substring(7, line.length()-1).split(","))));
 					line = bufferedReader.readLine();
 					
 					String search = line.substring(8, line.length()-1);
 					line = bufferedReader.readLine();
 					
-					//TODO: build a doors interpreter method for this
-					Door[] doors = new Door[8];
-					line = bufferedReader.readLine();
+					ArrayList<Monster> monsters = new ArrayList<Monster>();
+					monsters.addAll(Arrays.asList(retrieveMonsters(line.substring(0).split(","))));
 					
-					Character[] monsters = {};
-					
-					rooms.add(new Room(UID, Name, Type, description, items, search, monsters, doors));
+					rooms.add(new Room(UID, Name, Type, description, roomItems, search, monsters));
 				}
 			}
 			
@@ -111,6 +151,38 @@ public class Model extends Observable implements Serializable {
 		}
 		
 		
+	}
+
+	private Monster[] retrieveMonsters(String[] UIDList) {
+		Monster[] out = new Monster[UIDList.length];
+		
+		for(int i = 0; i < out.length; i++) {
+			
+			for(int j = 0; j < items.size(); j++) {
+				
+				if(items.get(j).getShortName().equals(UIDList[i])) {
+					out[i] = monsters.get(j);
+				}
+			}
+		}
+		
+		return out;
+	}
+
+	private GenericItem[] retrieveItems(String[] UIDList) {
+		GenericItem[] out = new GenericItem[UIDList.length];
+		
+		for(int i = 0; i < out.length; i++) {
+			
+			for(int j = 0; j < items.size(); j++) {
+				
+				if(items.get(j).getShortName().equals(UIDList[i])) {
+					out[i] = items.get(j);
+				}
+			}
+		}
+		
+		return out;
 	}
 
 	private void loadNewItems() {

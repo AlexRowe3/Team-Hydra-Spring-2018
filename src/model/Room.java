@@ -10,7 +10,7 @@ public class Room {
 	private String roomDescription;
 	private ArrayList<GenericItem> roomItems;
 	private String roomSearch;
-	private Character[] characters;
+	private ArrayList<Monster> monsters = new ArrayList<Monster>();
 	//private Artifact[] artifacts;
 	private Door[] doors;
 	
@@ -26,14 +26,14 @@ public class Room {
 	public static final int NORTHWEST = 7;
 	
 	public Room (String roomUniqueID, String roomName, String roomType, String roomDescription, ArrayList<GenericItem> roomItems, 
-			String roomSearch, Character[] characters) {
+			String roomSearch, ArrayList<Monster> monsters) {
 		this.roomUniqueID = roomUniqueID;
 		this.roomName = roomName;
 		this.roomType = roomType;
 		this.roomDescription = roomDescription;
 		this.roomItems = roomItems;
 		this.roomSearch = roomSearch;
-		this.characters = characters;
+		this.monsters = monsters;
 	}
 	
 	public String getUID() {
@@ -56,8 +56,8 @@ public class Room {
 		
 	}
 	
-	public Character[] getMonsterList() {
-		return characters;
+	public ArrayList<Monster> getMonsterList() {
+		return monsters;
 		
 	}
 	
@@ -86,4 +86,7 @@ public class Room {
 		doors[direction] = door;
 	}
 	
+	public void removeMonster(int index) {
+		monsters.remove(index);
+	}
 }
