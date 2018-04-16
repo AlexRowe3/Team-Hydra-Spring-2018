@@ -5,9 +5,9 @@ public class Weapon extends GenericItem{
 	private int strength;
 	private int attackBonus;
 	
-	public Weapon(String itemName, int uniqueID, String itemShortName, String description, int strength,
+	public Weapon(String itemName, String itemShortName, String description, int strength,
 			int attackBonus) {
-		super(itemName, uniqueID, itemShortName, description);
+		super(itemName, itemShortName, description);
 		this.strength = strength;
 		this.attackBonus = attackBonus;
 	}

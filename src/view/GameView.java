@@ -17,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.GenericItem;
+import model.Player;
 // This import is needed for the Action listeners as well as the Room connection indexes.
 import model.Room;
 /**
@@ -170,9 +171,12 @@ public class GameView implements Observer {
 	}
 
 	@Override
-	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-		
+	public void update(Observable o, Object a) {
+		if (o instanceof Player) {
+			if (a instanceof Room) {
+				textOutputLView.getItems().add(((Room) a).getDescription());
+			}
+		}
 	}
 
 }

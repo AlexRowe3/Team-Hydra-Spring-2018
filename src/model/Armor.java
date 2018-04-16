@@ -3,8 +3,8 @@ package model;
 public class Armor extends GenericItem{
 	
 	
-	public Armor(String itemName, int uniqueID, String itemShortName, String description) {
-		super(itemName, uniqueID, itemShortName, description);
+	public Armor(String itemName, String itemShortName, String description) {
+		super(itemName, itemShortName, description);
 		// TODO Auto-generated constructor stub
 	}
 	

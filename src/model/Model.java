@@ -217,7 +217,9 @@ public class Model extends Observable implements Serializable {
 						line = bufferedReader.readLine();
 						
 					} else if (type == "Blueprint") {
-						
+						// TODO: add the required items to the Items.txt and set up the good info here
+						// It is going to be a generic item until then
+						items.add(new GenericItem(itemName, type, type));
 					} else if (type == "Consumable") {
 						
 						line = bufferedReader.readLine();

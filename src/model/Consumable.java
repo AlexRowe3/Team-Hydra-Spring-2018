@@ -4,9 +4,9 @@ public class Consumable extends GenericItem{
 	
 	private int effect;
 	
-	public Consumable (String itemName, int uniqueID, String itemShortName, String description, int effect) {
+	public Consumable (String itemName, String itemShortName, String description, int effect) {
 		
-		super(itemName, effect, itemShortName, description);
+		super(itemName, itemShortName, description);
 		this.effect = effect;
 	}
 	

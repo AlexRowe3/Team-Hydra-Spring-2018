@@ -19,7 +19,6 @@ public class Player extends Character{
 		this.level = level;
 		this.currentRoom = currentRoom;
 		roomChanged = true;
-		
 	}
 
 	
@@ -32,7 +31,7 @@ public class Player extends Character{
 		currentRoom = targetRoom;
 		roomChanged = true;
 		setChanged();
-		notifyObservers();
+		notifyObservers(currentRoom);
 		
 	}
 	
@@ -44,7 +43,7 @@ public class Player extends Character{
 		
 	}
 	
-	public void editInventory() {
+	public void addItem() {
 		
 	}
 	
