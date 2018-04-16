@@ -53,7 +53,7 @@ public class Model extends Observable implements Serializable {
 	}
 
 	private void loadNewMonsters() {
-		// TODO Auto-generated method stub
+		// TODO: Finish the file reading for the Monsters
 		String fileName = ".\\src\\docs\\Monsters.txt";
 		String line = null;
 		
@@ -75,13 +75,47 @@ public class Model extends Observable implements Serializable {
 	}
 
 	private void loadNewPuzzles() {
-		// TODO Auto-generated method stub
+		// TODO: Finish the file reading for the Monsters
+		String fileName = ".\\src\\docs\\Puzzles.txt";
+		String line = null;
 		
+		try {
+			FileReader fileReader = new FileReader(fileName);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			
+			while((line = bufferedReader.readLine()) != null) {
+				
+			}
+			
+			bufferedReader.close();
+			fileReader.close();
+		} catch(FileNotFoundException ex) {
+			ex.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void loadNewDoors() {
-		// TODO Auto-generated method stub
+		// TODO: Finish the file reading for the Monsters
+		String fileName = ".\\src\\docs\\Doors.txt";
+		String line = null;
 		
+		try {
+			FileReader fileReader = new FileReader(fileName);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			
+			while((line = bufferedReader.readLine()) != null) {
+				
+			}
+			
+			bufferedReader.close();
+			fileReader.close();
+		} catch(FileNotFoundException ex) {
+			ex.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private void loadNewPlayer() {
@@ -206,28 +240,39 @@ public class Model extends Observable implements Serializable {
 					String description = line.substring(13, line.length()-1);
 					line = bufferedReader.readLine();
 					
-					String type = line.substring(6, line.length());
+					String type = line.substring(6, line.length()-1);
 					
-					if(type == "Weapon") {
+					if(type.equals("Weapon")) {
 						
 						line = bufferedReader.readLine();
+						int power = Integer.parseInt(line.substring(9, line.length()));
+						line = bufferedReader.readLine();
+						int bonus = Integer.parseInt(line.substring(13, line.length()));
+						items.add(new Weapon(itemName, shortName, description, power, bonus));
 						
-					} else if (type == "Armor") {
+					} else if (type.equals("Armor")) {
 						
 						line = bufferedReader.readLine();
+						int defense = Integer.parseInt(line.substring(9, line.length()));
+						items.add(new Armor(itemName, shortName, description, defense));
 						
-					} else if (type == "Blueprint") {
+					} else if (type.equals("Blueprint")) {
+						
 						// TODO: add the required items to the Items.txt and set up the good info here
 						// It is going to be a generic item until then
-						items.add(new GenericItem(itemName, type, type));
-					} else if (type == "Consumable") {
+						items.add(new GenericItem(itemName, shortName, description));
+						
+					} else if (type.equals("Consumable")) {
 						
 						line = bufferedReader.readLine();
+						int effect = Integer.parseInt(line.substring(7,line.length()));
+						items.add(new Consumable(itemName, shortName, description, effect));
 						
-					} else if (type == "Crafting Item") {
+					} else if (type.equals("Crafting Item")) {
+						
+						items.add(new GenericItem(itemName, shortName, description));
 						
 					}
-					
 				}
 			}
 			

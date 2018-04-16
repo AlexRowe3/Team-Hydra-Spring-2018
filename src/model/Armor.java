@@ -2,12 +2,15 @@ package model;
 
 public class Armor extends GenericItem{
 	
+	private int defense;
 	
-	public Armor(String itemName, String itemShortName, String description) {
+	public Armor(String itemName, String itemShortName, String description, int armorValue) {
 		super(itemName, itemShortName, description);
-		// TODO Auto-generated constructor stub
+		defense = armorValue;
 	}
 	
-	//TODO: Add all of the unique variables to the Armor class.
+	public int getArmorValue() {
+		return defense;
+	}
 
 }

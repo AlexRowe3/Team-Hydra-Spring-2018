@@ -82,12 +82,10 @@ ItemName:"Swordfish Meat"
 ShortName:”SFMT”
 Description:”Large cuts of meat from a swordfish.”
 Type:”Consumable”
-Usage:”Heals the player”
 Effect:10
 ~
 ItemName:"MedKit"
 ShortName:”MDKT”
 Description:”A small white and green box filled with all the essentials for taking care of injuries.”
 Type:”Consumable”
-Usage:”Heals the player”
 Effect:15
