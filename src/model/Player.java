@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Player extends Character{
 	
 	private Armor equippedArmor;
@@ -8,7 +10,7 @@ public class Player extends Character{
 	private Room currentRoom;
 	private boolean roomChanged = false;
 	
-	public Player(String UID, String name, int healthPoints, int strength, int defense, GenericItem[] heldItems,
+	public Player(String UID, String name, int healthPoints, int strength, int defense, ArrayList<GenericItem> heldItems,
 			int experience, String description, Armor equippedArmor, Weapon equippedWeapon, int level,
 			Room currentRoom) {
 		super(UID, name, healthPoints, strength, defense, heldItems, experience, description);

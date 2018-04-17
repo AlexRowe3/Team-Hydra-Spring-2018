@@ -93,4 +93,9 @@ public class Room {
 	public void removeMonster(int index) {
 		monsters.remove(index);
 	}
+	
+	public void removeItem(int index) {
+		roomItems.remove(index);
+	}
+	
 }

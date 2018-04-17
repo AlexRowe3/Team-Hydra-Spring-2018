@@ -21,7 +21,7 @@ Health:18
 Damage:8
 DEF:6
 Experience:10
-Items:"Storage Room Key"
+Items:"STRK"
 Name:"Jellyfish"
 ShortName:"JYFS"
 Description:"Kind of slow, doesn’t look strong, but it has a sting."

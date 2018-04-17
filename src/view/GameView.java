@@ -13,12 +13,15 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import model.GenericItem;
 import model.Model;
 import model.Player;
@@ -36,10 +39,11 @@ import model.Room;
 public class GameView implements Observer {
 	
 	// TODO: Bring the class-wide edited values out of their methods so that we can use them intra-method.
-	private ObservableList<String> textOutList = FXCollections.observableArrayList("Test Message, Default Entry", "Test Message 2, Default Entry. Meant for testing the look of longer messages. Please remove after confirming the appearance of this message in the view.");
+	private ObservableList<String> textOutList = FXCollections.observableArrayList("Welcome to the game!", "Test Message 2, Default Entry. Meant for testing the look of longer messages. Please remove after confirming the appearance of this message in the view.");
 	private ListView<String> textOutputLView = new ListView<>(textOutList);
 	//List for inventory with scrollbar
 	private ListView<GenericItem> playerInventoryLView = new ListView<>();
+	private ListView<Button> dynamicBtnLView = new ListView<>();
 	
 	//This is purely for the actionlisteners. DO NOT USE IT OUTSIDE OF AN ACTION LISTENER.
 	private Model model;
@@ -77,8 +81,6 @@ public class GameView implements Observer {
 		
 		// TODO: Add the map
 		
-		ListView<Button> dynamicBtnLView = new ListView<>();
-		
 		// TODO: Add the buttons
 		
 		// TODO: Add the map node to the VBox
@@ -100,6 +102,30 @@ public class GameView implements Observer {
 		textOutputLView.setPrefSize(600, 200);
 		textOutputLView.autosize();
 		textOutputLView.setEditable(true);
+		
+		/** DO NOT MESS WITH THIS IT IS REQUIRED FOR WORD WRAP IN THE TEXT OUT LISTVIEW */
+		textOutputLView.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
+			
+			@Override
+			public ListCell<String> call(ListView<String> list) {
+				final ListCell cell = new ListCell() {
+					private Text text;
+					
+					@Override
+					public void updateItem(Object item, boolean empty) {
+						super.updateItem(item, empty);
+						if(!isEmpty()) {
+							text = new Text(item.toString());
+							text.setWrappingWidth(textOutputLView.getPrefWidth()-10);
+							setGraphic(text);
+						}
+					}
+				};
+				
+				return cell;
+			}
+			
+		});
 		
 		ImgTextOutVBox.getChildren().addAll(imgView, textOutputLView);
 		

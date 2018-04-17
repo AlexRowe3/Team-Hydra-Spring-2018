@@ -67,6 +67,36 @@ public class Model extends Observable implements Serializable {
 			
 			while((line = bufferedReader.readLine()) != null) {
 				
+				if(!line.startsWith("~")) {
+					
+					String name = line.substring(6, line.length()-1);
+					line = bufferedReader.readLine();
+					
+					String shortName = line.substring(11, line.length()-1);
+					line = bufferedReader.readLine();
+					
+					String desc = line.substring(13, line.length()-1);
+					line = bufferedReader.readLine();
+					
+					int maxHP = Integer.parseInt(line.substring(7, line.length()));
+					line = bufferedReader.readLine();
+					
+					int damage = Integer.parseInt(line.substring(7, line.length()));
+					line = bufferedReader.readLine();
+					
+					int def = Integer.parseInt(line.substring(4, line.length()));
+					line = bufferedReader.readLine();
+					
+					int xp = Integer.parseInt(line.substring(11, line.length()));
+					line = bufferedReader.readLine();
+					
+					String itemsString = line.substring(7, line.length()-1);
+					ArrayList<GenericItem> items = retrieveItems(itemsString.split(","));
+					
+					monsters.add(new Monster(shortName, name, maxHP, damage, def, items, xp, desc));
+					
+				}
+				
 			}
 			
 			bufferedReader.close();
@@ -88,6 +118,10 @@ public class Model extends Observable implements Serializable {
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			
 			while((line = bufferedReader.readLine()) != null) {
+				
+				if(!line.startsWith("~")) {
+					
+				}
 				
 			}
 			
@@ -212,7 +246,7 @@ public class Model extends Observable implements Serializable {
 		int hp = 20;
 		int strength = 0;
 		int defense = 0;
-		GenericItem[] inventory = {};
+		ArrayList<GenericItem> inventory = new ArrayList<GenericItem>();
 		int experience = 0;
 		String description = "Thats me!";
 		Armor armor = null;
@@ -255,8 +289,7 @@ public class Model extends Observable implements Serializable {
 					String search = line.substring(8, line.length()-1);
 					line = bufferedReader.readLine();
 					
-					ArrayList<Monster> monsters = new ArrayList<Monster>();
-					monsters.addAll(Arrays.asList(retrieveMonsters(line.substring(0).split(","))));
+					ArrayList<Monster> monsters = retrieveMonsters(line.substring(0).split(","));
 					
 					rooms.add(new Room(UID, Name, Type, description, roomItems, search, monsters));
 				}
@@ -273,15 +306,15 @@ public class Model extends Observable implements Serializable {
 		
 	}
 
-	private Monster[] retrieveMonsters(String[] UIDList) {
-		Monster[] out = new Monster[UIDList.length];
+	private ArrayList<Monster> retrieveMonsters(String[] UIDList) {
+		ArrayList<Monster> out = new ArrayList<Monster>();
 		
-		for(int i = 0; i < out.length; i++) {
+		for(int i = 0; i < UIDList.length; i++) {
 			
 			for(int j = 0; j < items.size(); j++) {
 				
 				if(items.get(j).getShortName().equals(UIDList[i])) {
-					out[i] = monsters.get(j);
+					out.add(monsters.get(j));
 				}
 			}
 		}
