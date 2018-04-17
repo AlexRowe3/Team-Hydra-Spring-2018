@@ -12,7 +12,7 @@ public class Room {
 	private String roomSearch;
 	private ArrayList<Monster> monsters = new ArrayList<Monster>();
 	//private Artifact[] artifacts;
-	private Door[] doors;
+	private Door[] doors = new Door[8];
 	
 	
 	//List of values representing each direction in the code. for use in the connected rooms check

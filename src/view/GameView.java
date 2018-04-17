@@ -171,7 +171,16 @@ public class GameView implements Observer {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				//TODO: Fill the action listener
+				
+				if(model.checkDirection(direction)) {
+					
+					
+					
+				} else {
+					
+					textOutputLView.getItems().add("You can't go that way!");
+					
+				}
 			}
 			
 		});

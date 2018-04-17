@@ -127,12 +127,17 @@ public class Model extends Observable implements Serializable {
 						
 						locked = false;
 						addDoor(UID, room1, room2, locked, "");
+						// I have to account for the KeyID line, but i don't care for it's input
+						// So I tell the system to just take it in, but don't do anything with it.
 						line = bufferedReader.readLine();
+						
 					} else {
 						
 						locked = true;
+						line = bufferedReader.readLine();
+						String keyID = line.substring(7, line.length()-1);
+						addDoor(UID, room1, room2, locked, keyID);
 						
-						addDoor(UID, room1, room2, locked, "");
 					}
 					
 				}
@@ -169,11 +174,37 @@ public class Model extends Observable implements Serializable {
 		if(locked) {
 			door = new Door(targetRoom1, targetRoom2, locked, retrieveItem(keyID));
 			
-			
+			addDoorToRoom(door, targetRoom1, targetDirection1);
+			addDoorToRoom(door, targetRoom2, targetDirection2);
 		} else {
+			door = new Door(targetRoom1, targetRoom2);
 			
-			
-			
+			addDoorToRoom(door, targetRoom1, targetDirection1);
+			addDoorToRoom(door, targetRoom2, targetDirection2);
+		}
+	}
+
+	private void addDoorToRoom(Door door, Room room, String direction) {
+		if(!door.equals(null) || !room.equals(null)) {
+			if(direction.equals("N")) {
+				room.addDoor(door, Room.NORTH);
+			} else if (direction.equals("NE")) {
+				room.addDoor(door, Room.NORTHEAST);
+			} else if (direction.equals("E")) {
+				room.addDoor(door, Room.EAST);
+			} else if (direction.equals("SE")) {
+				room.addDoor(door, Room.SOUTHEAST);
+			} else if (direction.equals("S")) {
+				room.addDoor(door, Room.SOUTH);
+			} else if (direction.equals("SW")) {
+				room.addDoor(door, Room.SOUTHWEST);
+			} else if (direction.equals("W")) {
+				room.addDoor(door, Room.WEST);
+			} else if (direction.equals("NW")) {
+				room.addDoor(door, Room.NORTHWEST);
+			}
+		} else {
+			System.out.println("NULL DOOR FOUND!!! or room");
 		}
 	}
 
@@ -383,6 +414,10 @@ public class Model extends Observable implements Serializable {
 		
 		setChanged();
 		notifyObservers(player);
+	}
+	
+	public boolean checkDirection(int direction) {
+		return player.getCurrentRoom().checkDirection(direction);
 	}
 
 }
