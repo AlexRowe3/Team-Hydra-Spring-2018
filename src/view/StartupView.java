@@ -79,9 +79,10 @@ public class StartupView extends Application{
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				GameView gameview = new GameView();
 				Model model = new Model();
+				GameView gameview = new GameView(model);
 				model.addObserver(gameview);
+				model.loadNewGame();
 				stage.hide();
 			}
 			

@@ -2,37 +2,42 @@ package model;
 
 public class Player extends Character{
 	
-	private GenericItem equippedArmor;
-	private GenericItem equippedWeapon;
+	private Armor equippedArmor;
+	private Weapon equippedWeapon;
 	private int level;
 	private Room currentRoom;
-	// this is used to help the observer know if it should display new room information
-	// when we tell them we updated the player.
-	private boolean roomChanged;
+	private boolean roomChanged = false;
 	
 	public Player(String UID, String name, int healthPoints, int strength, int defense, GenericItem[] heldItems,
-			int experience, String description, GenericItem equippedArmor, GenericItem equippedWeapon, int level,
+			int experience, String description, Armor equippedArmor, Weapon equippedWeapon, int level,
 			Room currentRoom) {
 		super(UID, name, healthPoints, strength, defense, heldItems, experience, description);
 		this.equippedArmor = equippedArmor;
 		this.equippedWeapon = equippedWeapon;
 		this.level = level;
 		this.currentRoom = currentRoom;
-		roomChanged = true;
+		changeRoom(currentRoom);
 	}
 
+	public Armor getArmor() {
+		return equippedArmor;
+	}
 	
+	public Weapon getWeapon() {
+		return equippedWeapon;
+	}
 	
 	public Room getCurrentRoom() {
 		return currentRoom;
 	}
 	
+	public boolean checkRoomChanged() {
+		return roomChanged;
+	}
+	
 	public void changeRoom(Room targetRoom) {
 		currentRoom = targetRoom;
 		roomChanged = true;
-		setChanged();
-		notifyObservers(currentRoom);
-		
 	}
 	
 	public void changeArmor() {
@@ -47,14 +52,8 @@ public class Player extends Character{
 		
 	}
 	
-	public boolean getRoomChanged() {
-		/* I built this this way so that I can make sure that I return the correct value,
-		 * but set roomChanged to false regardless. Since this method will only be used
-		 * by the observer classes.
-		 */
-		boolean temp = roomChanged;
+	public Room getChangedRoom() {
 		roomChanged = false;
-		return temp;
+		return currentRoom;
 	}
-
 }

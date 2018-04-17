@@ -3,7 +3,6 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Observable;
 // Used for reading the default game state from files.
 import java.io.FileReader;
@@ -26,17 +25,16 @@ public class Model extends Observable implements Serializable {
 	private static final long serialVersionUID = 1L;
 	// The player's information
 	private Player player;
-	
 	// The list of all the objects in the game. At least one copy of each
 	private ArrayList<Room> rooms = new ArrayList<Room>();
 	private ArrayList<GenericItem> items = new ArrayList<GenericItem>();
 	private ArrayList<Monster> monsters = new ArrayList<Monster>();
 	
 	public Model() {
-		loadNewGame();
+		
 	}
 
-	private void loadNewGame() {
+	public void loadNewGame() {
 		
 		loadNewItems();
 		
@@ -49,6 +47,9 @@ public class Model extends Observable implements Serializable {
 		loadNewPuzzles();
 		
 		loadNewPlayer();
+		
+		setChanged();
+		notifyObservers(player);
 		
 	}
 
@@ -76,7 +77,7 @@ public class Model extends Observable implements Serializable {
 
 	private void loadNewPuzzles() {
 		// TODO: Finish the file reading for the Monsters
-		String fileName = ".\\src\\docs\\Puzzles.txt";
+		String fileName = ".\\src\\docs\\Puzzle.txt";
 		String line = null;
 		
 		try {
@@ -128,8 +129,8 @@ public class Model extends Observable implements Serializable {
 		GenericItem[] inventory = {};
 		int experience = 0;
 		String description = "Thats me!";
-		GenericItem armor = null;
-		GenericItem weapon = null;
+		Armor armor = null;
+		Weapon weapon = null;
 		int level = 1;
 		Room room = getRoom("SR01");
 		
@@ -301,6 +302,20 @@ public class Model extends Observable implements Serializable {
 		}
 		return null;
 	}
-
+	
+	/**
+	 * Method checkRoomChanged()
+	 * @return boolean 
+	 * True if the player has moved since the last check. False otherwise.
+	 */
+	public boolean checkRoomChanged() {
+		return player.checkRoomChanged();
+	}
+	
+	public void movePlayer(int direction) {
+		
+		setChanged();
+		notifyObservers(player);
+	}
 
 }

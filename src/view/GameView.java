@@ -3,6 +3,8 @@ package view;
 import java.util.Observable;
 import java.util.Observer;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -17,6 +19,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.GenericItem;
+import model.Model;
 import model.Player;
 // This import is needed for the Action listeners as well as the Room connection indexes.
 import model.Room;
@@ -32,11 +35,17 @@ import model.Room;
 public class GameView implements Observer {
 	
 	// TODO: Bring the class-wide edited values out of their methods so that we can use them intra-method.
-	ListView<String> textOutputLView = new ListView<>();
+	private ObservableList<String> textOutList = FXCollections.observableArrayList("Test Message, Default Entry", "Test Message 2, Default Entry. Meant for testing the look of longer messages. Please remove after confirming the appearance of this message in the view.");
+	private ListView<String> textOutputLView = new ListView<>(textOutList);
 	//List for inventory with scrollbar
-	ListView<GenericItem> playerInventoryLView = new ListView<>();
+	private ListView<GenericItem> playerInventoryLView = new ListView<>();
 	
-	public GameView() {
+	//This is purely for the actionlisteners. DO NOT USE IT OUTSIDE OF AN ACTION LISTENER.
+	private Model model;
+	
+	public GameView(Model model) {
+		this.model = model;
+		
 		Stage stage = new Stage();
 		
 		Pane pane = new Pane();
@@ -87,9 +96,9 @@ public class GameView implements Observer {
 		// Dynamic would take many images.
 		
 		//TODO: Likely need to take this out of the method and fill it elsewhere, possibly a different method.
-		ListView<String> textOutputLView = new ListView<>();
 		textOutputLView.setPrefSize(600, 200);
 		textOutputLView.autosize();
+		textOutputLView.setEditable(true);
 		
 		ImgTextOutVBox.getChildren().addAll(imgView, textOutputLView);
 		
@@ -172,9 +181,11 @@ public class GameView implements Observer {
 
 	@Override
 	public void update(Observable o, Object a) {
-		if (o instanceof Player) {
-			if (a instanceof Room) {
-				textOutputLView.getItems().add(((Room) a).getDescription());
+		if (a instanceof Player) {
+			if (model.checkRoomChanged()) {
+				// textOutputLView.getItems().add(((Room) a).getDescription());
+				// textOutList.add(((Player) a).getCurrentRoom().getDescription());
+				textOutputLView.getItems().add(((Player) a).getCurrentRoom().getDescription());
 			}
 		}
 	}
