@@ -181,11 +181,13 @@ public class GameView implements Observer {
 
 	@Override
 	public void update(Observable o, Object a) {
+		
 		if (a instanceof Player) {
+			
 			if (model.checkRoomChanged()) {
-				// textOutputLView.getItems().add(((Room) a).getDescription());
-				// textOutList.add(((Player) a).getCurrentRoom().getDescription());
+				
 				textOutputLView.getItems().add(((Player) a).getCurrentRoom().getDescription());
+				
 			}
 		}
 	}
