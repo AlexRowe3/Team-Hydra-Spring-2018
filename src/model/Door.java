@@ -14,6 +14,13 @@ public class Door {
 		key = unlockKey;
 	}
 	
+	public Door(Room room1, Room room2) {
+		rooms[0] = room1;
+		rooms[1] = room2;
+		isLocked = false;
+		key = null;
+	}
+	
 	/**
 	 * Method: checkRooms(Room)
 	 * @param room The room you want to see if it connects too

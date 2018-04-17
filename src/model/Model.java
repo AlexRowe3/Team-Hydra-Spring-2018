@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
+
+import com.sun.corba.se.spi.orb.StringPair;
+
 // Used for reading the default game state from files.
 import java.io.FileReader;
 import java.io.IOException;
@@ -40,11 +43,11 @@ public class Model extends Observable implements Serializable {
 		
 		loadNewMonsters();
 		
+		loadNewPuzzles();
+		
 		loadNewRooms();
 		
 		loadNewDoors();
-		
-		loadNewPuzzles();
 		
 		loadNewPlayer();
 		
@@ -98,7 +101,6 @@ public class Model extends Observable implements Serializable {
 	}
 
 	private void loadNewDoors() {
-		// TODO: Finish the file reading for the Monsters
 		String fileName = ".\\src\\docs\\Doors.txt";
 		String line = null;
 		
@@ -108,6 +110,33 @@ public class Model extends Observable implements Serializable {
 			
 			while((line = bufferedReader.readLine()) != null) {
 				
+				if(!line.startsWith("~")) {
+					
+					String UID = line.substring(5, line.length()-1);
+					line = bufferedReader.readLine();
+					
+					String room1 = line.substring(7, line.length()-1);
+					line = bufferedReader.readLine();
+					
+					String room2 = line.substring(7, line.length()-1);
+					line = bufferedReader.readLine();
+					
+					boolean locked;
+					line = line.substring(8, line.length()-1);
+					if(line.equals("False")) {
+						
+						locked = false;
+						addDoor(UID, room1, room2, locked, "");
+						line = bufferedReader.readLine();
+					} else {
+						
+						locked = true;
+						
+						addDoor(UID, room1, room2, locked, "");
+					}
+					
+				}
+				
 			}
 			
 			bufferedReader.close();
@@ -116,6 +145,35 @@ public class Model extends Observable implements Serializable {
 			ex.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+
+	private void addDoor(String UID, String room1, String room2, boolean locked, String keyID) {
+		
+		String[] target = new String[2];
+		Room targetRoom1;
+		String targetDirection1;
+		Room targetRoom2;
+		String targetDirection2;
+		
+		target = room1.split(",");
+		targetRoom1 = getRoom(target[0]);
+		targetDirection1 = target[1];
+		
+		target = room2.split(",");
+		targetRoom2 = getRoom(target[0]);
+		targetDirection2 = target[1];
+		
+		Door door;
+		
+		if(locked) {
+			door = new Door(targetRoom1, targetRoom2, locked, retrieveItem(keyID));
+			
+			
+		} else {
+			
+			
+			
 		}
 	}
 
@@ -218,6 +276,15 @@ public class Model extends Observable implements Serializable {
 		}
 		
 		return out;
+	}
+	private GenericItem retrieveItem(String UID) {
+		
+		for(int i = 0; i < items.size(); i++) {
+			if(items.get(i).getShortName().equals(UID)) {
+				return items.get(i);
+			}
+		}
+		return null;
 	}
 
 	private void loadNewItems() {
