@@ -26,7 +26,7 @@ public class Door {
 	 * @param room The room you want to see if it connects too
 	 * @return 
 	 * 0, 1 index of room identified room
-	 * 3 requested room not found
+	 * 2 requested room not found
 	 * 
 	 */
 	public int checkRooms(Room room) {

@@ -185,26 +185,23 @@ public class Model extends Observable implements Serializable {
 	}
 
 	private void addDoorToRoom(Door door, Room room, String direction) {
-		if(!door.equals(null) || !room.equals(null)) {
-			if(direction.equals("N")) {
-				room.addDoor(door, Room.NORTH);
-			} else if (direction.equals("NE")) {
-				room.addDoor(door, Room.NORTHEAST);
-			} else if (direction.equals("E")) {
-				room.addDoor(door, Room.EAST);
-			} else if (direction.equals("SE")) {
-				room.addDoor(door, Room.SOUTHEAST);
-			} else if (direction.equals("S")) {
-				room.addDoor(door, Room.SOUTH);
-			} else if (direction.equals("SW")) {
-				room.addDoor(door, Room.SOUTHWEST);
-			} else if (direction.equals("W")) {
-				room.addDoor(door, Room.WEST);
-			} else if (direction.equals("NW")) {
-				room.addDoor(door, Room.NORTHWEST);
-			}
-		} else {
-			System.out.println("NULL DOOR FOUND!!! or room");
+	
+		if(direction.equals("N")) {
+			room.addDoor(door, Room.NORTH);
+		} else if (direction.equals("NE")) {
+			room.addDoor(door, Room.NORTHEAST);
+		} else if (direction.equals("E")) {
+			room.addDoor(door, Room.EAST);
+		} else if (direction.equals("SE")) {
+			room.addDoor(door, Room.SOUTHEAST);
+		} else if (direction.equals("S")) {
+			room.addDoor(door, Room.SOUTH);
+		} else if (direction.equals("SW")) {
+			room.addDoor(door, Room.SOUTHWEST);
+		} else if (direction.equals("W")) {
+			room.addDoor(door, Room.WEST);
+		} else if (direction.equals("NW")) {
+			room.addDoor(door, Room.NORTHWEST);
 		}
 	}
 
@@ -252,8 +249,7 @@ public class Model extends Observable implements Serializable {
 					String description = line.substring(13, line.length()-1);
 					line = bufferedReader.readLine();
 					
-					ArrayList<GenericItem> roomItems = new ArrayList<GenericItem>();
-					roomItems.addAll(Arrays.asList(retrieveItems(line.substring(7, line.length()-1).split(","))));
+					ArrayList<GenericItem> roomItems = retrieveItems(line.substring(7, line.length()-1).split(","));
 					line = bufferedReader.readLine();
 					
 					String search = line.substring(8, line.length()-1);
@@ -293,15 +289,36 @@ public class Model extends Observable implements Serializable {
 		return out;
 	}
 
-	private GenericItem[] retrieveItems(String[] UIDList) {
-		GenericItem[] out = new GenericItem[UIDList.length];
+	private ArrayList<GenericItem> retrieveItems(String[] UIDList) {
 		
-		for(int i = 0; i < out.length; i++) {
+		ArrayList<GenericItem> out = new ArrayList<GenericItem>();
+		
+		String[] multiItemTemp = new String[2];
+		int quantity;
+		for(int i = 0; i < UIDList.length; i++) {
 			
-			for(int j = 0; j < items.size(); j++) {
+			if(UIDList[i].contains(":")) {
 				
-				if(items.get(j).getShortName().equals(UIDList[i])) {
-					out[i] = items.get(j);
+				multiItemTemp = UIDList[i].split(":");
+				quantity = Integer.parseInt(multiItemTemp[1]);
+				for(int j = 0; j < items.size(); j++) {
+					
+					if(items.get(j).getShortName().equals(multiItemTemp[0])) {
+						for(int k = 0; k < quantity; k++) {
+							out.add(items.get(j));
+						}
+					}
+				}
+				
+				
+			} else {
+				
+				for(int j = 0; j < items.size(); j++) {
+						
+					if(items.get(j).getShortName().equals(UIDList[i])) {
+						out.add(items.get(j));
+						break;
+					}
 				}
 			}
 		}
@@ -411,6 +428,15 @@ public class Model extends Observable implements Serializable {
 	}
 	
 	public void movePlayer(int direction) {
+		int index = player.getCurrentRoom().getDoor(direction).checkRooms(player.getCurrentRoom());
+		if(index == 1) {
+			index = 0;
+		} else if (index == 0) {
+			index = 1;
+		} else {
+			return;
+		}
+		player.changeRoom(player.getCurrentRoom().getDoor(direction).getRoom(index));
 		
 		setChanged();
 		notifyObservers(player);

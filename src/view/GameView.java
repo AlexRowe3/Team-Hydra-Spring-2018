@@ -1,5 +1,6 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -164,7 +165,7 @@ public class GameView implements Observer {
 		return PlayerInfoInventoryDirectionsVBox;
 	}
 
-	private Node generateDirectionButton(int direction, String directionLabel) {
+	private Button generateDirectionButton(int direction, String directionLabel) {
 		Button button = new Button(directionLabel);
 		
 		button.setOnAction(new EventHandler<ActionEvent>() {
@@ -174,7 +175,7 @@ public class GameView implements Observer {
 				
 				if(model.checkDirection(direction)) {
 					
-					
+					model.movePlayer(direction);
 					
 				} else {
 					
@@ -196,7 +197,12 @@ public class GameView implements Observer {
 			if (model.checkRoomChanged()) {
 				
 				textOutputLView.getItems().add(((Player) a).getCurrentRoom().getDescription());
+				ArrayList<GenericItem> items = new ArrayList<GenericItem>();
+				items = ((Player) a).getCurrentRoom().getRoomItems();
 				
+				for(int i = 0; i < items.size(); i++) {
+					textOutputLView.getItems().add(items.get(i).getName());
+				}
 			}
 		}
 	}

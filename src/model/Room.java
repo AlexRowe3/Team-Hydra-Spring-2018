@@ -34,6 +34,10 @@ public class Room {
 		this.roomItems = roomItems;
 		this.roomSearch = roomSearch;
 		this.monsters = monsters;
+		
+		for(int i = 0; i < doors.length; i++) {
+			doors[i] = null;
+		}
 	}
 	
 	public String getUID() {
@@ -71,7 +75,7 @@ public class Room {
 	
 	public boolean checkDirection(int direction) {
 		
-		if(doors[direction].equals(null)) {
+		if(doors[direction] == null) {
 			return false;
 		}
 		return true;
