@@ -37,16 +37,6 @@ Strength:16
 ~Type:”Key”
 ~Usage:”Unlocks the storage room (ENTER ROOM ID)”
 ~
-ItemName:"Harpoon Gun Blueprint"
-ShortName:”HGBP”
-Description:”A blueprint describing how to craft a harpoon gun. It looks like you need 80 metal pieces”
-Type:”Blueprint”
-~
-ItemName:"Metal Sheet Blueprint"
-ShortName:”MSBP”
-Description:”A blueprint describing how to craft a metal sheet. It looks like you need 20 metal pieces, 10 nuts and bolts, and a wrench.”
-Type:”Blueprint”
-~
 ItemName:"Metal Pieces"
 ShortName:”MTPS”
 Description:”Tiny pieces of metal that don’t have much use on their own.”
@@ -91,17 +81,15 @@ Type:”Consumable”
 Effect:15
 ~
 ItemName:"Harpoon Gun BluePrint"
-ItemID:"BP01"
 ShortName:"HGBP"
 Description:"A blueprint describing how to craft a harpoon gun."
-ItemsNeeded:"MTPS:80"
-ItemsOutput:"Harpoon Gun"
 Type:"BluePrint"
+ItemsNeeded:"MTPS:80"
+ItemsOutput:"HPGN"
 ~
 ItemName:"Metal Sheets BluePrint"
-ItemID:"BP02"
 ShortName:"MSBP"
 Description:"A blueprint describing how to craft a metal sheet."
-ItemsNeeded:"MTPS:20,NTBT:10,WRCH "
-ItemsOutput:"Metal Sheets"
 Type:"BluePrint"
+ItemsNeeded:"MTPS:20,NTBT:10,WRCH"
+ItemsOutput:"MTST"
