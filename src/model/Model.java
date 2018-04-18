@@ -454,6 +454,9 @@ public class Model extends Observable implements Serializable {
 		}
 		return null;
 	}
+	public Room getRoom() {
+		return player.getCurrentRoom();
+	}
 	
 	/**
 	 * Method checkRoomChanged()
@@ -479,12 +482,27 @@ public class Model extends Observable implements Serializable {
 		notifyObservers(player);
 	}
 	
+	public void falseMovePlayer() {
+		player.falseChangeRoom();
+		setChanged();
+		notifyObservers(player);
+	}
+	
 	public boolean checkDirection(int direction) {
 		return player.getCurrentRoom().checkDirection(direction);
 	}
 
 	public GenericItem getPlayerItem(int selectedIndex) {
 		return player.getItem(selectedIndex);
+	}
+	
+	public ArrayList<GenericItem> getPlayerItems() {
+		return player.getHeldItems();
+	}
+	
+	public void examinePlayerItem(int selectedIndex) {
+		setChanged();
+		notifyObservers(getPlayerItem(selectedIndex));
 	}
 
 }

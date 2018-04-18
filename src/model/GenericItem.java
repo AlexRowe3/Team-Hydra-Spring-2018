@@ -28,4 +28,9 @@ public class GenericItem {
 		return itemShortName;
 	}
 	
+	@Override
+	public String toString() {
+		return itemName;
+	}
+	
 }

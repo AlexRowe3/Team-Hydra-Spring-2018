@@ -18,8 +18,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.GenericItem;
 import model.*;
-
-public class InventoryView extends Observable implements Observer{
+// Created by Tom
+// Edited by William Bullock
+public class InventoryView implements Observer{
 	
 	// Having fun with variable names
 	
@@ -37,10 +38,7 @@ public class InventoryView extends Observable implements Observer{
 	// used simply for the controller located here
 	private Model model;
 	
-	// Hacky solution to sending information to the GameView
-	private String output = "";
-
-	public InventoryView(ArrayList<GenericItem> items, Model model) throws Exception {
+	public InventoryView(ArrayList<GenericItem> items, Model model, String title) throws Exception {
 		
 		this.model = model;
 		
@@ -75,8 +73,8 @@ public class InventoryView extends Observable implements Observer{
 		
 		pane.getChildren().add(hBox);
 		
-		Scene scene = new Scene(pane, 400, 100);
-		primaryStage.setTitle("Puzzle");
+		Scene scene = new Scene(pane, 400, 200);
+		primaryStage.setTitle(title);
 		primaryStage.setResizable(false);
 		primaryStage.setScene(scene);
 		primaryStage.show();
@@ -119,9 +117,7 @@ public class InventoryView extends Observable implements Observer{
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				output = model.getPlayerItem(itemList.getSelectionModel().getSelectedIndex()).getDescription();
-				setChanged();
-				notifyObservers();
+				model.examinePlayerItem(itemList.getSelectionModel().getSelectedIndex());
 			}
 			
 		});

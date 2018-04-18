@@ -94,18 +94,77 @@ public class GameView implements Observer {
 		
 		Button saveBtn = generateSaveButton();
 		
-		Button examineRoomBtn;
-		Button searchRoomBtn;
-		Button checkInventoryButton;
+		Button examineRoomBtn = generateExamineRoomButton();
+		Button searchRoomBtn = generateSearchRoomButton();
+		Button checkInventoryButton = generateCheckInventoryButton();
 		
 		
-		dynamicBtnLView.getItems().add(saveBtn);
+		dynamicBtnLView.getItems().addAll(checkInventoryButton, examineRoomBtn, searchRoomBtn, saveBtn);
 		// TODO: Add the map node to the VBox
 		MapButtonsVBox.getChildren().addAll(dynamicBtnLView);
 		
 		return MapButtonsVBox;
 	}
 
+	private Button generateCheckInventoryButton() {
+		Button button = new Button("Open Inventory");
+		
+		button.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				
+				try {
+					InventoryView iv = new InventoryView(model.getPlayerItems(), model, "Player Inventory");
+					model.addObserver(iv);
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
+			
+		});
+		
+		return button;
+	}
+
+	private Button generateSearchRoomButton() {
+		Button button = new Button("Search Room");
+		
+		button.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				try {
+					InventoryView iv = new InventoryView(model.getRoom().getRoomItems(), model, "Room Inventory");
+					model.addObserver(iv);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		});
+		
+		return button;
+	}
+
+	private Button generateExamineRoomButton() {
+		Button button = new Button("Examine Room");
+		
+		button.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				model.falseMovePlayer();
+			}
+			
+		});
+		
+		return button;
+	}
 	// Creates the VBox that stores the generic image and the listview that holds the text output.
 	private VBox generateImgTextOutVBox() {
 		
@@ -239,8 +298,9 @@ public class GameView implements Observer {
 
 			@Override
 			public void handle(ActionEvent arg0) {
+				
 				ObjectOutputStream oos;
-				//TODO: replace dummy.bin with save file name
+				
 				LocalTime.now();
 				File saveFile = new File(".\\src\\saves\\" + (new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + LocalTime.now().getHour() + LocalTime.now().getMinute()+".bin"));
 				
@@ -249,6 +309,7 @@ public class GameView implements Observer {
 					if(saveFile.exists()) {
 						oos = new ObjectOutputStream(new FileOutputStream(saveFile));
 						oos.writeObject(model);
+						oos.close();
 					}
 				
 				} catch (FileNotFoundException e) {
@@ -278,6 +339,8 @@ public class GameView implements Observer {
 					textOutputLView.getItems().add(items.get(i).getName());
 				}
 			}
+		} else if (a instanceof GenericItem) {
+			textOutputLView.getItems().add(((GenericItem) a).getDescription());
 		}
 	}
 

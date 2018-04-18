@@ -45,6 +45,10 @@ public class Player extends Character{
 		roomChanged = true;
 	}
 	
+	public void falseChangeRoom() {
+		roomChanged = true;
+	}
+	
 	public void changeArmor() {
 		
 	}
