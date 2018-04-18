@@ -89,3 +89,19 @@ ShortName:”MDKT”
 Description:”A small white and green box filled with all the essentials for taking care of injuries.”
 Type:”Consumable”
 Effect:15
+~
+ItemName:"Harpoon Gun BluePrint"
+ItemID:"BP01"
+ShortName:"HGBP"
+Description:"A blueprint describing how to craft a harpoon gun."
+ItemsNeeded:"MTPS:80"
+ItemsOutput:"Harpoon Gun"
+Type:"BluePrint"
+~
+ItemName:"Metal Sheets BluePrint"
+ItemID:"BP02"
+ShortName:"MSBP"
+Description:"A blueprint describing how to craft a metal sheet."
+ItemsNeeded:"MTPS:20,NTBT:10,WRCH "
+ItemsOutput:"Metal Sheets"
+Type:"BluePrint"
