@@ -92,9 +92,12 @@ public class GameView implements Observer {
 		
 		// TODO: Add the map
 		
-		// TODO: Add the buttons
-		
 		Button saveBtn = generateSaveButton();
+		
+		Button examineRoomBtn;
+		Button searchRoomBtn;
+		Button checkInventoryButton;
+		
 		
 		dynamicBtnLView.getItems().add(saveBtn);
 		// TODO: Add the map node to the VBox
@@ -244,14 +247,8 @@ public class GameView implements Observer {
 				
 				try {
 					if(saveFile.exists()) {
-						
 						oos = new ObjectOutputStream(new FileOutputStream(saveFile));
 						oos.writeObject(model);
-						
-					} else {
-						
-						textOutputLView.getItems().add("You can't go that way!");
-						
 					}
 				
 				} catch (FileNotFoundException e) {

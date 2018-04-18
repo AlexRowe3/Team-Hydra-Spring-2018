@@ -404,9 +404,15 @@ public class Model extends Observable implements Serializable {
 						
 					} else if (type.equals("BluePrint")) {
 						
-						// TODO: add the required items to the Items.txt and set up the good info here
+						line = bufferedReader.readLine();
+						String[] inItems = line.substring(13, line.length()-1).split(",");
+						ArrayList<GenericItem> requiredItems = retrieveItems(inItems);
+						line = bufferedReader.readLine();
+						
+						String item = line.substring(13, line.length()-1);
+						
 						// It is going to be a generic item until then
-						items.add(new GenericItem(itemName, shortName, description));
+						items.add(new Blueprint(itemName, shortName, description, requiredItems, retrieveItem(item)));
 						
 						
 					} else if (type.equals("Consumable")) {
@@ -415,7 +421,7 @@ public class Model extends Observable implements Serializable {
 						int effect = Integer.parseInt(line.substring(7,line.length()));
 						items.add(new Consumable(itemName, shortName, description, effect));
 						
-					} else if (type.equals("Crafting Item")) {
+					} else if (type.equals("Crafting Item") || type.equals("Key")) {
 						
 						items.add(new GenericItem(itemName, shortName, description));
 						
