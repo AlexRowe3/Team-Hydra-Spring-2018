@@ -1,5 +1,12 @@
 package view;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -82,6 +89,8 @@ public class GameView implements Observer {
 		// TODO: Add the map
 		
 		// TODO: Add the buttons
+		
+		Button saveBtn = generateSaveButton();
 		
 		// TODO: Add the map node to the VBox
 		MapButtonsVBox.getChildren().addAll(dynamicBtnLView);
@@ -207,6 +216,42 @@ public class GameView implements Observer {
 					
 					textOutputLView.getItems().add("You can't go that way!");
 					
+				}
+			}
+			
+		});
+		
+		return button;
+	}
+	
+	private Button generateSaveButton() {
+		Button button = new Button("Save");
+		
+		button.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				ObjectOutputStream oos;
+				//TODO: replace dummy.bin with save file name
+				
+				File saveFile = new File("dummy.bin");
+				
+				try {
+					if(saveFile.exists()) {
+						
+						oos = new ObjectOutputStream(new FileOutputStream(saveFile));
+						oos.writeObject(model);
+						
+					} else {
+						
+						textOutputLView.getItems().add("You can't go that way!");
+						
+					}
+				
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
 			}
 			
