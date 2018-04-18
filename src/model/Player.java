@@ -58,4 +58,8 @@ public class Player extends Character{
 		roomChanged = false;
 		return currentRoom;
 	}
+	
+	public int getLevel() {
+		return level;
+	}
 }

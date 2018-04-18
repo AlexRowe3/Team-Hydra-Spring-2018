@@ -7,81 +7,74 @@ import java.util.Observer;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import model.GenericItem;
-import model.Model;
-import model.Player;
-// This import is needed for the Action listeners as well as the Room connection indexes.
-import model.Room;
 
-public class InventoryView extends Application{
+public class InventoryView implements Observer{
 	
 	// Having fun with variable names
 	
 	// TODO: Make the variables less vulgar
 	
-	private ObservableList<GenericItem> fuckYou = FXCollections.observableArrayList();
+	private ObservableList<GenericItem> oItemList;
 	private ListView<GenericItem> itemList;
-	private HBox whateverTheFuckIWant;
-	private VBox dumbRetardBox;
+	private HBox hBox;
+	private VBox vBox;
 	private Button useItem;
 	private Button examineItem;
-	private Button equip;
+	private Button equipItem;
 	private Button discardItem;
 
-	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public InventoryView(ArrayList<GenericItem> items) throws Exception {
 		
+		Stage primaryStage = new Stage();
 		Pane pane = new Pane();
 		
-		dumbRetardBox = new VBox();
-		whateverTheFuckIWant = new HBox();
-		whateverTheFuckIWant.setPadding(new Insets(5,5,5,5));
-		dumbRetardBox.setPadding(new Insets(5,5,5,5));
+		vBox = new VBox();
+		hBox = new HBox();
+		hBox.setPadding(new Insets(5,5,5,5));
+		vBox.setPadding(new Insets(5,5,5,5));
 		
 		// Create the buttons that insult you
 		
 		useItem = new Button("Waste it on Yourself");
 		examineItem = new Button("Give it a Good Look");
-		equip = new Button("Put it On");
+		equipItem = new Button("Put it On");
 		discardItem = new Button("Toss this Shit");
 		
 		// Add the fucking list view
 		
-		itemList = new ListView<GenericItem>(fuckYou);
+		oItemList = FXCollections.observableArrayList(items);
+		itemList = new ListView<GenericItem>(oItemList);
 		
 		// Create and fill the vbox with buttons
 		
 		
-		dumbRetardBox.getChildren().addAll(useItem, examineItem, equip, discardItem);
+		vBox.getChildren().addAll(useItem, examineItem, equipItem, discardItem);
 		// vbox.getChildren().addAll(generateButtons());
-		dumbRetardBox.setSpacing(10);
+		vBox.setSpacing(10);
 		
-		whateverTheFuckIWant.getChildren().add(dumbRetardBox);
+		hBox.getChildren().addAll(itemList, vBox);
 		
-		pane.getChildren().add(whateverTheFuckIWant);
+		pane.getChildren().add(hBox);
 		
 		Scene scene = new Scene(pane, 400, 100);
 		primaryStage.setTitle("Puzzle");
 		primaryStage.setResizable(false);
 		primaryStage.setScene(scene);
 		primaryStage.show();
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO: auto generated
 	}
 	
 
