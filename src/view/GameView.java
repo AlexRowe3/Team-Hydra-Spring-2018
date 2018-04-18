@@ -7,7 +7,11 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -92,6 +96,7 @@ public class GameView implements Observer {
 		
 		Button saveBtn = generateSaveButton();
 		
+		dynamicBtnLView.getItems().add(saveBtn);
 		// TODO: Add the map node to the VBox
 		MapButtonsVBox.getChildren().addAll(dynamicBtnLView);
 		
@@ -233,8 +238,9 @@ public class GameView implements Observer {
 			public void handle(ActionEvent arg0) {
 				ObjectOutputStream oos;
 				//TODO: replace dummy.bin with save file name
+				LocalTime.now();
+				File saveFile = new File(".\\src\\saves\\" + (new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + LocalTime.now().getHour() + LocalTime.now().getMinute()+".bin"));
 				
-				File saveFile = new File("dummy.bin");
 				
 				try {
 					if(saveFile.exists()) {

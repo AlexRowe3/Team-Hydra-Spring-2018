@@ -31,11 +31,10 @@ Description:”It looks like someone stitched metal plates onto a basic scuba suit
 Type:”Armor”
 Strength:16
 ~
-~ItemName:"Storage Room Key"
-~ShortName:”STRK”
-~Description:”How did this key card get out here?”
-~Type:”Key”
-~Usage:”Unlocks the storage room (ENTER ROOM ID)”
+ItemName:"Storage Room Key"
+ShortName:”STRK”
+Description:”How did this key card get out here?”
+Type:”Key”
 ~
 ItemName:"Metal Pieces"
 ShortName:”MTPS”

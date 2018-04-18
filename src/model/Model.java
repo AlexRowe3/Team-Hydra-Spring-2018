@@ -402,11 +402,12 @@ public class Model extends Observable implements Serializable {
 						int defense = Integer.parseInt(line.substring(9, line.length()));
 						items.add(new Armor(itemName, shortName, description, defense));
 						
-					} else if (type.equals("Blueprint")) {
+					} else if (type.equals("BluePrint")) {
 						
 						// TODO: add the required items to the Items.txt and set up the good info here
 						// It is going to be a generic item until then
 						items.add(new GenericItem(itemName, shortName, description));
+						
 						
 					} else if (type.equals("Consumable")) {
 						
