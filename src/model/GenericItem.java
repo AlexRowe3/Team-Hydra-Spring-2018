@@ -14,7 +14,7 @@ public class GenericItem {
 		
 	}
 	
-	public String examineItem() {
+	public String getDescription() {
 		return description;
 		
 	}

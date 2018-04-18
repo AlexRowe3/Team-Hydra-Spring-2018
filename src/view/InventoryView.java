@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -16,8 +17,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.GenericItem;
+import model.*;
 
-public class InventoryView implements Observer{
+public class InventoryView extends Observable implements Observer{
 	
 	// Having fun with variable names
 	
@@ -31,8 +33,16 @@ public class InventoryView implements Observer{
 	private Button examineItem;
 	private Button equipItem;
 	private Button discardItem;
+	
+	// used simply for the controller located here
+	private Model model;
+	
+	// Hacky solution to sending information to the GameView
+	private String output = "";
 
-	public InventoryView(ArrayList<GenericItem> items) throws Exception {
+	public InventoryView(ArrayList<GenericItem> items, Model model) throws Exception {
+		
+		this.model = model;
 		
 		Stage primaryStage = new Stage();
 		Pane pane = new Pane();
@@ -44,10 +54,10 @@ public class InventoryView implements Observer{
 		
 		// Create the buttons that insult you
 		
-		useItem = new Button("Waste it on Yourself");
-		examineItem = new Button("Give it a Good Look");
-		equipItem = new Button("Put it On");
-		discardItem = new Button("Toss this Shit");
+		useItem = generateUseItemButton();
+		examineItem = generateExamineItemButton();
+		equipItem = generateEquipItemButton();
+		discardItem = generateDropItemButton();
 		
 		// Add the fucking list view
 		
@@ -72,9 +82,75 @@ public class InventoryView implements Observer{
 		primaryStage.show();
 	}
 
+	private Button generateDropItemButton() {
+		Button button = new Button("Drop Item");
+		
+		button.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO: fill handler
+			}
+			
+		});
+		
+		return button;
+	}
+
+	private Button generateEquipItemButton() {
+		Button button = new Button("Equip Item");
+		
+		button.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO: fill handler
+			}
+			
+		});
+		
+		return button;
+	}
+
+	private Button generateExamineItemButton() {
+		Button button = new Button("Examine Item");
+		
+		button.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				output = model.getPlayerItem(itemList.getSelectionModel().getSelectedIndex()).getDescription();
+				setChanged();
+				notifyObservers();
+			}
+			
+		});
+		
+		return button;
+	}
+
+	private Button generateUseItemButton() {
+		Button button = new Button("Use Item");
+		
+		button.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				// TODO: fill handler
+			}
+			
+		});
+		
+		return button;
+	}
+
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO: auto generated
+		if(arg instanceof Player) {
+			if(((Player) arg).getInventoryChanged()) {
+				itemList.getItems().setAll(((Player) arg).getHeldItems());
+			}
+		}
 	}
 	
 

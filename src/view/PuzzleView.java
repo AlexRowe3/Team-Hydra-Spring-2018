@@ -3,7 +3,6 @@ package view;
 import java.util.Observable;
 import java.util.Observer;
 
-import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,7 +12,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class PuzzleView extends Application implements Observer{
+public class PuzzleView implements Observer{
 	
 	
 	private Label hint;
@@ -24,9 +23,9 @@ public class PuzzleView extends Application implements Observer{
 	
 	static final int numberOfButtons = 2;
 	
-	@Override
-	public void start(Stage primaryStage) throws Exception {
+	public PuzzleView() throws Exception {
 		
+		Stage primaryStage = new Stage();
 		Pane pane = new Pane();
 		
 		VBox vbox = new VBox();

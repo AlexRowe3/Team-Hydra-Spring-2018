@@ -2,7 +2,6 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Observable;
 
 // Used for reading the default game state from files.
@@ -475,6 +474,10 @@ public class Model extends Observable implements Serializable {
 	
 	public boolean checkDirection(int direction) {
 		return player.getCurrentRoom().checkDirection(direction);
+	}
+
+	public GenericItem getPlayerItem(int selectedIndex) {
+		return player.getItem(selectedIndex);
 	}
 
 }

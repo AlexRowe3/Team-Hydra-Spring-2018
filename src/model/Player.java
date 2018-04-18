@@ -8,7 +8,10 @@ public class Player extends Character{
 	private Weapon equippedWeapon;
 	private int level;
 	private Room currentRoom;
+	
+	// These are used for the observers, they purely keep track of what changed 
 	private boolean roomChanged = false;
+	private boolean inventoryChanged = false;
 	
 	public Player(String UID, String name, int healthPoints, int strength, int defense, ArrayList<GenericItem> heldItems,
 			int experience, String description, Armor equippedArmor, Weapon equippedWeapon, int level,
@@ -61,5 +64,9 @@ public class Player extends Character{
 	
 	public int getLevel() {
 		return level;
+	}
+	
+	public boolean getInventoryChanged() {
+		return inventoryChanged;
 	}
 }

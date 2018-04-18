@@ -75,4 +75,12 @@ public class Character extends Observable {
 		healthPoints += effect;
 		healthChanged = true;
 	}
+	
+	public boolean getHealthChanged() {
+		return healthChanged;
+	}
+	
+	public GenericItem getItem(int selectedIndex) {
+		return heldItems.get(selectedIndex);
+	}
 }
