@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Observable;
 
-import com.sun.corba.se.spi.orb.StringPair;
-
 // Used for reading the default game state from files.
 import java.io.FileReader;
 import java.io.IOException;
