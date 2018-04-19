@@ -102,4 +102,8 @@ public class Character extends Observable {
 		inventoryChanged = true;
 		heldItems.remove(selectedIndex);
 	}
+	
+	public boolean getInventoryChanged() {
+		return inventoryChanged;
+	}
 }

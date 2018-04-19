@@ -16,7 +16,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.GenericItem;
 import model.*;
 // Created by Tom
 // Edited by William Bullock
@@ -58,9 +57,9 @@ public class InventoryView implements Observer{
 		
 		oItemList = FXCollections.observableArrayList(items);
 		
-		if(type) {
+		if(type == PLAYER) {
 			setupPlayer();
-		} else {
+		} else if (type == ROOM) {
 			setupRoom();
 		}
 		
@@ -99,7 +98,7 @@ public class InventoryView implements Observer{
 				int index = itemList.getSelectionModel().getSelectedIndex();
 				
 				if ((index > -1) && oItemList.size()>0 && index < oItemList.size()) {
-					model.transferItem(index, model.ROOM);
+					model.transferItem(index, Model.ROOM);
 				}
 			}
 			
@@ -129,7 +128,11 @@ public class InventoryView implements Observer{
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO: fill handler
+				int index = itemList.getSelectionModel().getSelectedIndex();
+				
+				if ((index > -1) && oItemList.size()>0 && index < oItemList.size()) {
+					model.transferItem(index, Model.PLAYER);
+				}
 			}
 			
 		});
