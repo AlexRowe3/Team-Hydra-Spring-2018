@@ -42,27 +42,22 @@ public class Room {
 	
 	public String getUID() {
 		return roomUniqueID;
-		
 	}
 	
 	public String getDescription() {
 		return roomDescription;
-		
 	}
 	
 	public String getName() {
 		return roomName;
-		
 	}
 	
 	public String getSearchResults() {
 		return roomSearch;
-		
 	}
 	
 	public ArrayList<Monster> getMonsterList() {
 		return monsters;
-		
 	}
 	
 	public String getType() {
@@ -79,7 +74,6 @@ public class Room {
 			return false;
 		}
 		return true;
-		
 	}
 	
 	public Door getDoor(int direction) {
@@ -97,5 +91,12 @@ public class Room {
 	public void removeItem(int index) {
 		roomItems.remove(index);
 	}
+
+	public GenericItem getRoomItem(int selectedIndex) {
+		return roomItems.get(selectedIndex);
+	}
 	
+	public void addItem(GenericItem newItem) {
+		roomItems.add(newItem);
+	}
 }

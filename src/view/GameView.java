@@ -115,7 +115,7 @@ public class GameView implements Observer {
 			public void handle(ActionEvent arg0) {
 				
 				try {
-					InventoryView iv = new InventoryView(model.getPlayerItems(), model, "Player Inventory");
+					InventoryView iv = new InventoryView(model.getPlayerItems(), model, "Player Inventory", InventoryView.PLAYER);
 					model.addObserver(iv);
 					
 				} catch (Exception e) {
@@ -138,7 +138,7 @@ public class GameView implements Observer {
 			@Override
 			public void handle(ActionEvent arg0) {
 				try {
-					InventoryView iv = new InventoryView(model.getRoom().getRoomItems(), model, "Room Inventory");
+					InventoryView iv = new InventoryView(model.getRoom().getRoomItems(), model, "Room Inventory", InventoryView.ROOM);
 					model.addObserver(iv);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -332,15 +332,12 @@ public class GameView implements Observer {
 			if (model.checkRoomChanged()) {
 				
 				textOutputLView.getItems().add(((Player) a).getCurrentRoom().getDescription());
-				ArrayList<GenericItem> items = new ArrayList<GenericItem>();
-				items = ((Player) a).getCurrentRoom().getRoomItems();
 				
-				for(int i = 0; i < items.size(); i++) {
-					textOutputLView.getItems().add(items.get(i).getName());
-				}
 			}
 		} else if (a instanceof GenericItem) {
+			
 			textOutputLView.getItems().add(((GenericItem) a).getDescription());
+			
 		}
 	}
 

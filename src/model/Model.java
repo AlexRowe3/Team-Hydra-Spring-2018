@@ -30,6 +30,10 @@ public class Model extends Observable implements Serializable {
 	private ArrayList<GenericItem> items = new ArrayList<GenericItem>();
 	private ArrayList<Monster> monsters = new ArrayList<Monster>();
 	
+	// used for transferring items
+	public static final int ROOM = 0;
+	public static final int PLAYER = 1;
+	
 	public Model() {
 		
 	}
@@ -500,9 +504,49 @@ public class Model extends Observable implements Serializable {
 		return player.getHeldItems();
 	}
 	
+	public GenericItem getRoomItem(int selectedIndex) {
+		return player.getCurrentRoom().getRoomItem(selectedIndex);
+	}
+	
 	public void examinePlayerItem(int selectedIndex) {
 		setChanged();
 		notifyObservers(getPlayerItem(selectedIndex));
 	}
+
+	public void examineRoomItem(int selectedIndex) {
+		setChanged();
+		notifyObservers(getRoomItem(selectedIndex));
+	}
+
+	
+	public void transferItem(int selectedIndex, int source) {
+		
+		if (source == ROOM) {
+			
+			player.addItem(player.getCurrentRoom().getRoomItem(selectedIndex));
+			player.getCurrentRoom().removeItem(selectedIndex);
+			
+			setChanged();
+			notifyObservers(player);
+			setChanged();
+			notifyObservers(player.getCurrentRoom());
+			
+		} else if (source == PLAYER) {
+			
+			player.getCurrentRoom().addItem(player.getItem(selectedIndex));
+			player.removeItem(selectedIndex);
+			
+			setChanged();
+			notifyObservers(player);
+			setChanged();
+			notifyObservers(player.getCurrentRoom());
+			
+			
+		} else {
+			System.out.println("Invalid Source provided!");
+		}
+	}
+	
+	
 
 }

@@ -37,7 +37,12 @@ public class Player extends Character{
 	}
 	
 	public boolean checkRoomChanged() {
-		return roomChanged;
+		if(roomChanged) {
+			roomChanged = false;
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public void changeRoom(Room targetRoom) {
@@ -57,12 +62,7 @@ public class Player extends Character{
 		
 	}
 	
-	public void addItem() {
-		
-	}
-	
 	public Room getChangedRoom() {
-		roomChanged = false;
 		return currentRoom;
 	}
 	

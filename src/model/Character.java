@@ -6,27 +6,30 @@ import java.util.Observable;
 public class Character extends Observable {
 	private String UID;
 	private String name;
-	private int healthPoints;
+	private int maxHealthPoints;
+	private int currentHealthPoints;
 	private int strength;
 	private int defense;
-	private ArrayList<GenericItem> heldItems;
+	protected ArrayList<GenericItem> heldItems;
 	//private Artifact[] heldArtifacts;
 	private int experience;
 	private String description;
 	
 	// Variables for use in the MVC to help identify what to update:
 	private boolean healthChanged = true;
+	private boolean inventoryChanged = true;
 	
 	public Character(String UID, String name, int healthPoints, int strength, int defense, ArrayList<GenericItem> heldItems,
 			int experience, String description) {
 		this.UID = UID;
 		this.name = name;
-		this.healthPoints = healthPoints;
+		maxHealthPoints = healthPoints;
 		this.strength = strength;
 		this.defense = defense;
 		this.heldItems = heldItems;
 		this.experience = experience;
 		this.description = description;
+		currentHealthPoints = maxHealthPoints;
 	}
 	
 	public String getUID() {
@@ -35,17 +38,15 @@ public class Character extends Observable {
 	
 	public String getName() {
 		return name;
-		
 	}
 	
 	public ArrayList<GenericItem> getHeldItems() {
+		inventoryChanged = false;
 		return heldItems;
 	}
 	
-	public int getHealth() {
-		healthChanged = false;
-		return healthPoints;
-		
+	public int getMaxHealth() {
+		return maxHealthPoints;
 	}
 	
 	public String getDescription() {
@@ -54,17 +55,19 @@ public class Character extends Observable {
 	
 	public int getExperience() {
 		return experience;
-		
 	}
 	
 	public int getDefense() {
 		return defense;
-		
 	}
 	
 	public int getStrength() {
 		return strength;
-		
+	}
+	
+	public int getCurrentHealth() {
+		healthChanged = false;
+		return currentHealthPoints;
 	}
 	
 	public void attack() {
@@ -72,7 +75,13 @@ public class Character extends Observable {
 	}
 	
 	public void changeHealth(int effect) {
-		healthPoints += effect;
+		if(effect > 0 && effect > (maxHealthPoints - currentHealthPoints)) {
+			currentHealthPoints = maxHealthPoints;
+		} else if (effect < 0 && effect < (-currentHealthPoints)) {
+			currentHealthPoints = 0;
+		} else {
+			currentHealthPoints += effect;
+		}
 		healthChanged = true;
 	}
 	
@@ -82,5 +91,15 @@ public class Character extends Observable {
 	
 	public GenericItem getItem(int selectedIndex) {
 		return heldItems.get(selectedIndex);
+	}
+	
+	public void addItem(GenericItem newItem) {
+		inventoryChanged = true;
+		heldItems.add(newItem);
+	}
+	
+	public void removeItem(int selectedIndex) {
+		inventoryChanged = true;
+		heldItems.remove(selectedIndex);
 	}
 }

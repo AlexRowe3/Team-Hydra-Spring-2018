@@ -33,16 +33,22 @@ public class InventoryView implements Observer{
 	private Button useItem;
 	private Button examineItem;
 	private Button equipItem;
-	private Button discardItem;
+	private Button pickupDropItem;
+	private Stage stage;
+	private boolean type;
+	
+	public static final boolean PLAYER = true;
+	public static final boolean ROOM = false;
 	
 	// used simply for the controller located here
 	private Model model;
 	
-	public InventoryView(ArrayList<GenericItem> items, Model model, String title) throws Exception {
+	public InventoryView(ArrayList<GenericItem> items, Model model, String title, boolean type) throws Exception {
 		
 		this.model = model;
+		this.type = type;
 		
-		Stage primaryStage = new Stage();
+		stage = new Stage();
 		Pane pane = new Pane();
 		
 		vBox = new VBox();
@@ -50,34 +56,70 @@ public class InventoryView implements Observer{
 		hBox.setPadding(new Insets(5,5,5,5));
 		vBox.setPadding(new Insets(5,5,5,5));
 		
-		// Create the buttons that insult you
-		
-		useItem = generateUseItemButton();
-		examineItem = generateExamineItemButton();
-		equipItem = generateEquipItemButton();
-		discardItem = generateDropItemButton();
-		
-		// Add the fucking list view
-		
 		oItemList = FXCollections.observableArrayList(items);
-		itemList = new ListView<GenericItem>(oItemList);
 		
-		// Create and fill the vbox with buttons
-		
-		
-		vBox.getChildren().addAll(useItem, examineItem, equipItem, discardItem);
-		// vbox.getChildren().addAll(generateButtons());
-		vBox.setSpacing(10);
-		
-		hBox.getChildren().addAll(itemList, vBox);
+		if(type) {
+			setupPlayer();
+		} else {
+			setupRoom();
+		}
 		
 		pane.getChildren().add(hBox);
 		
 		Scene scene = new Scene(pane, 400, 200);
-		primaryStage.setTitle(title);
-		primaryStage.setResizable(false);
-		primaryStage.setScene(scene);
-		primaryStage.show();
+		
+		itemList.setPrefHeight(scene.getHeight()-20);
+		
+		stage.setTitle(title);
+		stage.setResizable(false);
+		stage.setScene(scene);
+		stage.show();
+	}
+
+	private void setupRoom() {
+		useItem = generateUseItemButton();
+		examineItem = generateExamineItemButton();
+		pickupDropItem = generatePickUpItemButton();
+		
+		itemList = new ListView<GenericItem>(oItemList);
+		
+		vBox.getChildren().addAll(useItem, examineItem, pickupDropItem);
+		vBox.setSpacing(10);
+		
+		hBox.getChildren().addAll(itemList, vBox);
+	}
+
+	private Button generatePickUpItemButton() {
+		Button button = new Button("Pick Up Item");
+		
+		button.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent arg0) {
+				int index = itemList.getSelectionModel().getSelectedIndex();
+				
+				if ((index > -1) && oItemList.size()>0 && index < oItemList.size()) {
+					model.transferItem(index, model.ROOM);
+				}
+			}
+			
+		});
+		
+		return button;
+	}
+
+	private void setupPlayer() {
+		useItem = generateUseItemButton();
+		examineItem = generateExamineItemButton();
+		equipItem = generateEquipItemButton();
+		pickupDropItem = generateDropItemButton();
+		
+		itemList = new ListView<GenericItem>(oItemList);
+		
+		vBox.getChildren().addAll(useItem, examineItem, equipItem, pickupDropItem);
+		vBox.setSpacing(10);
+		
+		hBox.getChildren().addAll(itemList, vBox);
 	}
 
 	private Button generateDropItemButton() {
@@ -117,7 +159,20 @@ public class InventoryView implements Observer{
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				model.examinePlayerItem(itemList.getSelectionModel().getSelectedIndex());
+				int index = itemList.getSelectionModel().getSelectedIndex();
+				
+				if ((index > -1) && oItemList.size()>0 && index < oItemList.size()) {
+					
+					if(type == ROOM) {
+						
+						model.examineRoomItem(index);
+						
+					} else {
+						
+						model.examinePlayerItem(index);
+						
+					}
+				}
 			}
 			
 		});
@@ -142,10 +197,22 @@ public class InventoryView implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if(arg instanceof Player) {
-			if(((Player) arg).getInventoryChanged()) {
+		
+		if (arg instanceof Player) {
+			
+			if (((Player) arg).getInventoryChanged() && (type == PLAYER)) {
+				
 				itemList.getItems().setAll(((Player) arg).getHeldItems());
+				
+			} else if(((Player)arg).checkRoomChanged() && (type == ROOM)) {
+				
+				stage.close();
 			}
+			
+		} else if (arg instanceof Room && type == ROOM) {
+			
+			itemList.getItems().setAll(((Room) arg).getRoomItems());
+			
 		}
 	}
 	
