@@ -11,6 +11,8 @@ public class Player extends Character{
 	
 	// These are used for the observers, they purely keep track of what changed 
 	private boolean roomChanged = false;
+	private boolean weaponChanged = false;
+	private boolean armorChanged = false;
 	
 	public Player(String UID, String name, int healthPoints, int strength, int defense, ArrayList<GenericItem> heldItems,
 			int experience, String description, Armor equippedArmor, Weapon equippedWeapon, int level,
@@ -24,10 +26,12 @@ public class Player extends Character{
 	}
 
 	public Armor getArmor() {
+		armorChanged = false;
 		return equippedArmor;
 	}
 	
 	public Weapon getWeapon() {
+		weaponChanged = false;
 		return equippedWeapon;
 	}
 	
@@ -44,6 +48,14 @@ public class Player extends Character{
 		}
 	}
 	
+	public boolean checkWeaponChanged() {
+		return weaponChanged;
+	}
+	
+	public boolean checkArmorChanged() {
+		return armorChanged;
+	}
+	
 	public void changeRoom(Room targetRoom) {
 		currentRoom = targetRoom;
 		roomChanged = true;
@@ -53,12 +65,25 @@ public class Player extends Character{
 		roomChanged = true;
 	}
 	
-	public void changeArmor() {
-		
-	}
-	
-	public void changeWeapon() {
-		
+	public void equip(int newEquipIndex) {
+		if(getItem(newEquipIndex) instanceof Armor) {
+			
+			if (equippedArmor != null) {
+				addItem(equippedArmor);
+			}
+			equippedArmor = (Armor) getItem(newEquipIndex);
+			removeItem(newEquipIndex);
+			armorChanged = true;
+			
+		} else if (getItem(newEquipIndex) instanceof Weapon) {
+			
+			if (equippedWeapon != null) {
+				addItem(equippedWeapon);
+			}
+			equippedWeapon = (Weapon) getItem(newEquipIndex);
+			removeItem(newEquipIndex);
+			weaponChanged = true;
+		}
 	}
 	
 	public Room getChangedRoom() {

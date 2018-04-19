@@ -147,9 +147,12 @@ public class InventoryView implements Observer{
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				// TODO: fill handler
+				int index = itemList.getSelectionModel().getSelectedIndex();
+				
+				if ((index > -1) && oItemList.size()>0 && index < oItemList.size()) {
+					model.equipItem(index);
+				}
 			}
-			
 		});
 		
 		return button;
@@ -173,11 +176,9 @@ public class InventoryView implements Observer{
 					} else {
 						
 						model.examinePlayerItem(index);
-						
 					}
 				}
 			}
-			
 		});
 		
 		return button;

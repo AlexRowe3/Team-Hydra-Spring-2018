@@ -30,9 +30,14 @@ public class Model extends Observable implements Serializable {
 	private ArrayList<GenericItem> items = new ArrayList<GenericItem>();
 	private ArrayList<Monster> monsters = new ArrayList<Monster>();
 	
-	// used for transferring items
+	// used for transferring items and checking health changes
 	public static final int ROOM = 0;
 	public static final int PLAYER = 1;
+	public static final int MONSTER = 2;
+	
+	// used for deciding which type of health you are looking for
+	public static final boolean CURRENT = true;
+	public static final boolean MAX = false;
 	
 	public Model() {
 		
@@ -547,6 +552,69 @@ public class Model extends Observable implements Serializable {
 		}
 	}
 	
+	public void equipItem(int selectedIndex) {
+		if(player.getItem(selectedIndex) instanceof Armor || player.getItem(selectedIndex) instanceof Weapon) {
+
+			player.equip(selectedIndex);
+			setChanged();
+			notifyObservers(player);
+			
+		} else {
+			setChanged();
+			notifyObservers();
+		}
+	}
+
+
+	public boolean checkHealthChanged(int target) {
+		if(target == PLAYER) {
+			
+			return player.getHealthChanged();
+			
+		} else if (target == MONSTER) {
+			
+			// TODO: work with monsters
+			
+		}
+		return false;
+	}
+
+	public int getHealth(int target, boolean healthType) {
+		if(target == PLAYER) {
+			if(healthType == CURRENT) {
+				return player.getCurrentHealth();
+			} else {
+				// assuming looking for max health
+				return player.getMaxHealth();
+			}
+		} else if (target == MONSTER) {
+			// TODO: Work with monsters
+			
+			if(healthType == CURRENT) {
+				
+			} else {
+				//assuming looking for max health
+				
+			}
+		}
+		return 0;
+	}
+
+	public boolean checkArmorChanged() {
+		return player.checkArmorChanged();
+	}
+
+	public boolean checkWeaponChanged() {
+		return player.checkWeaponChanged();
+	}
+
+
+	public Armor getArmor() {
+		return player.getArmor();
+	}
 	
+	public Weapon getWeapon() {
+		return player.getWeapon();
+	}
 
 }

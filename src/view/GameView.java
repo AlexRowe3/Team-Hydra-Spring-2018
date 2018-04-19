@@ -1,16 +1,12 @@
 package view;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
@@ -20,7 +16,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -55,6 +50,14 @@ public class GameView implements Observer {
 	//List for inventory with scrollbar
 	private ListView<GenericItem> playerInventoryLView = new ListView<>();
 	private ListView<Button> dynamicBtnLView = new ListView<>();
+	
+	// Player stats for the player info section
+	Label DplayerInfoLbl = new Label("");
+	Label DhpLbl = new Label("");
+	Label DlvlLbl = new Label("");
+	Label DxpLbl = new Label("");
+	Label DweaponLbl = new Label("");
+	Label DarmorLbl = new Label("");
 	
 	//This is purely for the actionlisteners. DO NOT USE IT OUTSIDE OF AN ACTION LISTENER.
 	private Model model;
@@ -227,14 +230,16 @@ public class GameView implements Observer {
 		Label hpLbl = new Label("HP: ");
 		Label lvlLbl = new Label("Level: ");
 		Label xpLbl = new Label("Experience: ");
-		Label equipmentLbl = new Label("Weapon: ");
+		Label weaponLbl = new Label("Weapon: ");
+		Label armorLbl = new Label("Armor: ");
 		
-		staticLabelsVBox.getChildren().addAll(playerInfoLbl, hpLbl, lvlLbl, xpLbl, equipmentLbl);
+		staticLabelsVBox.getChildren().addAll(playerInfoLbl, hpLbl, lvlLbl, xpLbl, weaponLbl, armorLbl);
 		
 		VBox dynamicLabelsVBox = new VBox();
 		dynamicLabelsVBox.setPadding(new Insets(5,5,5,5));
+		dynamicLabelsVBox.setSpacing(5);
 		
-		//TODO: add the base labels
+		dynamicLabelsVBox.getChildren().addAll(DplayerInfoLbl, DhpLbl, DlvlLbl, DxpLbl, DweaponLbl, DarmorLbl);
 		
 		playerInfoHBox.getChildren().addAll(staticLabelsVBox, dynamicLabelsVBox);
 		// Player Info Box done
@@ -331,13 +336,27 @@ public class GameView implements Observer {
 			
 			if (model.checkRoomChanged()) {
 				
-				textOutputLView.getItems().add(((Player) a).getCurrentRoom().getDescription());
+				textOutputLView.getItems().add(((Player) a).getCurrentRoom().getDescription());	
+			}
+			if (model.checkHealthChanged(Model.PLAYER)) {
 				
+				DhpLbl.setText("" + model.getHealth(Model.PLAYER, Model.CURRENT));
+			}
+			if (model.checkArmorChanged()) {
+				
+				DarmorLbl.setText(model.getArmor().getName());
+			}
+			if (model.checkWeaponChanged()) {
+				
+				DweaponLbl.setText(model.getWeapon().getName());
 			}
 		} else if (a instanceof GenericItem) {
 			
 			textOutputLView.getItems().add(((GenericItem) a).getDescription());
 			
+		} else if (a == null) {
+			
+			textOutputLView.getItems().add("You can't do that!");
 		}
 	}
 
