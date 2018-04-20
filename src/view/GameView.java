@@ -56,8 +56,8 @@ public class GameView implements Observer {
 	Label DhpLbl = new Label("");
 	Label DlvlLbl = new Label("");
 	Label DxpLbl = new Label("");
-	Label DweaponLbl = new Label("");
-	Label DarmorLbl = new Label("");
+	Label DweaponLbl = new Label("Nothing");
+	Label DarmorLbl = new Label("Nothing");
 	
 	//This is purely for the actionlisteners. DO NOT USE IT OUTSIDE OF AN ACTION LISTENER.
 	private Model model;
@@ -350,6 +350,15 @@ public class GameView implements Observer {
 				
 				DweaponLbl.setText(model.getWeapon().getName());
 			}
+			if (model.checkLevelChanged()) {
+				
+				DlvlLbl.setText("" + model.getLevel());
+			}
+			if(model.checkExpChanged()) {
+				
+				DxpLbl.setText("" + model.getExp(Model.PLAYER));
+			}
+			
 		} else if (a instanceof GenericItem) {
 			
 			textOutputLView.getItems().add(((GenericItem) a).getDescription());

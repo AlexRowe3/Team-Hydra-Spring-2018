@@ -608,13 +608,33 @@ public class Model extends Observable implements Serializable {
 		return player.checkWeaponChanged();
 	}
 
-
 	public Armor getArmor() {
 		return player.getArmor();
 	}
 	
 	public Weapon getWeapon() {
 		return player.getWeapon();
+	}
+
+	public boolean checkExpChanged() {
+		return player.getExpChanged();
+	}
+
+	public boolean checkLevelChanged() {
+		return player.getLevelChanged();
+	}
+	
+	public int getLevel() {
+		return player.getLevel();
+	}
+	
+	public int getExp(int target) {
+		if (target == PLAYER) {
+			return player.getExp();
+		} else if (target == MONSTER) {
+			return player.getCurrentRoom().getMonsterList().get(0).getExperience();
+		}
+		return 0;
 	}
 
 }

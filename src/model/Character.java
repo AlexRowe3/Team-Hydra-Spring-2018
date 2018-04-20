@@ -11,23 +11,21 @@ public class Character extends Observable {
 	private int strength;
 	private int defense;
 	protected ArrayList<GenericItem> heldItems;
-	//private Artifact[] heldArtifacts;
-	private int experience;
 	private String description;
 	
 	// Variables for use in the MVC to help identify what to update:
 	private boolean healthChanged = true;
 	private boolean inventoryChanged = true;
 	
+	
 	public Character(String UID, String name, int healthPoints, int strength, int defense, ArrayList<GenericItem> heldItems,
-			int experience, String description) {
+			String description) {
 		this.UID = UID;
 		this.name = name;
 		maxHealthPoints = healthPoints;
 		this.strength = strength;
 		this.defense = defense;
 		this.heldItems = heldItems;
-		this.experience = experience;
 		this.description = description;
 		currentHealthPoints = maxHealthPoints;
 	}
@@ -51,10 +49,6 @@ public class Character extends Observable {
 	
 	public String getDescription() {
 		return description;
-	}
-	
-	public int getExperience() {
-		return experience;
 	}
 	
 	public int getDefense() {
@@ -105,5 +99,10 @@ public class Character extends Observable {
 	
 	public boolean getInventoryChanged() {
 		return inventoryChanged;
+	}
+	
+	public void changeMaxHealth(int change) {
+		healthChanged = true;
+		
 	}
 }
