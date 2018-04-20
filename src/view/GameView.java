@@ -83,7 +83,6 @@ public class GameView implements Observer {
 		// TODO: fix the title
 		stage.setTitle("Sea Oddesey");
 		//I want the game to be non-resize-able and maximized.  I can change it, but it will change the appearance too
-		stage.setMaximized(true);
 		stage.setResizable(false);
 		stage.show();
 	}
@@ -290,9 +289,7 @@ public class GameView implements Observer {
 					
 				}
 			}
-			
 		});
-		
 		return button;
 	}
 	
@@ -336,7 +333,16 @@ public class GameView implements Observer {
 			
 			if (model.checkRoomChanged()) {
 				
-				textOutputLView.getItems().add(((Player) a).getCurrentRoom().getDescription());	
+				textOutputLView.getItems().add(((Player) a).getChangedRoom().getDescription());	
+				
+				if (((Player) a).getCurrentRoom().checkHasMonster()) {
+					
+					CombatView cv = new CombatView(model);
+					model.addObserver(cv);
+					
+					model.prepareCombat();
+					
+				}
 			}
 			if (model.checkHealthChanged(Model.PLAYER)) {
 				

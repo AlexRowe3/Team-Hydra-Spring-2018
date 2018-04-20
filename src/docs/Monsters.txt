@@ -30,7 +30,7 @@ Damage:15
 DEF:5
 Experience:3
 Items:""
-Name:"Mobby Dick"
+Name:"Moby Dick"
 ShortName:"MBDK"
 Description:"For some reason you have the urge to chase this whale."
 Health:32
@@ -70,7 +70,7 @@ Damage:6
 DEF:4
 Experience:12
 Items:"TNMT"
-Name:"Narwhals"
+Name:"Narwhal"
 ShortName:"NWLS"
 Description:"He looks a little long in the tooth."
 Health:24

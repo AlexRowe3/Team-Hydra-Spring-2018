@@ -13,8 +13,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import model.GenericItem;
 import model.Model;
+import model.Monster;
 import model.Player;
 import model.Room;
 
@@ -49,7 +49,7 @@ public class CombatView implements Observer{
 		VBox monsterStaticVBox = new VBox();
 		monsterStaticVBox.setPadding(new Insets(5,5,5,5));
 		
-		Label monsterInfoLbl = new Label("Player Information: ");
+		Label monsterInfoLbl = new Label("Monster Information: ");
 		Label MhpLbl = new Label("HP: ");
 		
 		monsterStaticVBox.getChildren().addAll(monsterInfoLbl, MhpLbl);
@@ -58,6 +58,8 @@ public class CombatView implements Observer{
 		monsterDynamicVBox.setPadding(new Insets(5,5,5,5));
 		
 		monsterDynamicVBox.getChildren().addAll(DmonsterInfoLbl, DMhpLbl);
+		
+		monsterHBox.getChildren().addAll(monsterStaticVBox, monsterDynamicVBox);
 		
 		HBox playerHBox = new HBox();
 		playerHBox.setPadding(new Insets(5,5,5,5));
@@ -92,6 +94,8 @@ public class CombatView implements Observer{
 		
 		buttonHBox.getChildren().addAll(attackBtn, checkInvBtn);
 		bigBox.getChildren().addAll(monsterHBox, playerHBox, buttonHBox);
+		
+		pane.getChildren().add(bigBox);
 		
 		Scene scene = new Scene(pane);
 		stage.setTitle("Combat Window");
@@ -131,9 +135,7 @@ public class CombatView implements Observer{
 			@Override
 			public void handle(ActionEvent arg0) {
 				
-				// TODO: fill handler
-				
-				
+				model.attack();
 			}
 			
 		});
@@ -169,8 +171,27 @@ public class CombatView implements Observer{
 		} else if (a == null) {
 			
 			
-		} else if (a instanceof Room && ((Room) a).checkMonstersChanged()) {
+		} else if (a instanceof Room && !((Room) a).checkHasMonster()) {
+			
 			stage.close();
+			
+		} else if (a instanceof Monster) {
+			
+			// the only time a monster is sent as a notification is for the start of combat!
+			
+			DmonsterInfoLbl.setText(((Monster) a).getName());
+			DMhpLbl.setText(((Monster) a).getCurrentHealth() + "/" + ((Monster) a).getMaxHealth());
+			
+			DhpLbl.setText(model.getHealth(Model.PLAYER, Model.CURRENT) + "/" + model.getHealth(Model.PLAYER, Model.MAX));
+			DlvlLbl.setText(model.getLevel() + "");
+			DxpLbl.setText(model.getExp(Model.PLAYER) + "");
+			if(model.getWeapon() != null) {
+				DweaponLbl.setText(model.getWeapon().getName());
+			}
+			if(model.getArmor() != null) {
+				DarmorLbl.setText(model.getArmor().getName());
+			}
+			
 		}
 	}
 }

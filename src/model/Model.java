@@ -295,7 +295,7 @@ public class Model extends Observable implements Serializable {
 					String search = line.substring(8, line.length()-1);
 					line = bufferedReader.readLine();
 					
-					ArrayList<Monster> monsters = retrieveMonsters(line.substring(0).split(","));
+					Monster monsters = retrieveMonster(line.substring(9, line.length()-1));
 					
 					rooms.add(new Room(UID, Name, Type, description, roomItems, search, monsters));
 				}
@@ -312,16 +312,13 @@ public class Model extends Observable implements Serializable {
 		
 	}
 
-	private ArrayList<Monster> retrieveMonsters(String[] UIDList) {
-		ArrayList<Monster> out = new ArrayList<Monster>();
-		
-		for(int i = 0; i < UIDList.length; i++) {
+	private Monster retrieveMonster(String UIDList) {
+		Monster out = null;
+	
+		for(int i = 0; i < monsters.size(); i++) {
 			
-			for(int j = 0; j < items.size(); j++) {
-				
-				if(items.get(j).getShortName().equals(UIDList[i])) {
-					out.add(monsters.get(j));
-				}
+			if(monsters.get(i).getUID().equals(UIDList)) {
+				out = monsters.get(i);
 			}
 		}
 		
@@ -574,7 +571,7 @@ public class Model extends Observable implements Serializable {
 		} else if (target == MONSTER) {
 			
 			// TODO: work with monsters
-			
+			// might not need?
 		}
 		return false;
 	}
@@ -632,9 +629,20 @@ public class Model extends Observable implements Serializable {
 		if (target == PLAYER) {
 			return player.getExp();
 		} else if (target == MONSTER) {
-			return player.getCurrentRoom().getMonsterList().get(0).getExperience();
+			return player.getCurrentRoom().getMonster().getExperience();
 		}
 		return 0;
+	}
+
+	public void attack() {
+		// TODO: handle
+		
+	}
+
+	public void prepareCombat() {
+		setChanged();
+		notifyObservers(player.getCurrentRoom().getMonster());
+		
 	}
 
 }

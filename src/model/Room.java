@@ -10,7 +10,7 @@ public class Room {
 	private String roomDescription;
 	private ArrayList<GenericItem> roomItems;
 	private String roomSearch;
-	private ArrayList<Monster> monsters = new ArrayList<Monster>();
+	private Monster monster;
 	//private Artifact[] artifacts;
 	private Door[] doors = new Door[8];
 	
@@ -24,22 +24,26 @@ public class Room {
 	public static final int WEST = 6;
 	public static final int NORTHWEST = 7;
 	
+	// For use with communicating with the controller (identifying what's changed)
 	private boolean itemsChanged = false;
-	
-	private boolean monstersChanged = false;
+	private boolean hasMonster = false;
 	
 	public Room (String roomUniqueID, String roomName, String roomType, String roomDescription, ArrayList<GenericItem> roomItems, 
-			String roomSearch, ArrayList<Monster> monsters) {
+			String roomSearch, Monster monster) {
 		this.roomUniqueID = roomUniqueID;
 		this.roomName = roomName;
 		this.roomType = roomType;
 		this.roomDescription = roomDescription;
 		this.roomItems = roomItems;
 		this.roomSearch = roomSearch;
-		this.monsters = monsters;
+		this.monster = monster;
 		
 		for(int i = 0; i < doors.length; i++) {
 			doors[i] = null;
+		}
+		
+		if (monster != null) {
+			hasMonster = true;
 		}
 	}
 	
@@ -59,9 +63,8 @@ public class Room {
 		return roomSearch;
 	}
 	
-	public ArrayList<Monster> getMonsterList() {
-		monstersChanged = false;
-		return monsters;
+	public Monster getMonster() {
+		return monster;
 	}
 	
 	public String getType() {
@@ -76,8 +79,8 @@ public class Room {
 		return itemsChanged;
 	}
 	
-	public boolean checkMonstersChanged() {
-		return monstersChanged;
+	public boolean checkHasMonster() {
+		return hasMonster;
 	}
 	
 	public boolean checkDirection(int direction) {
@@ -96,11 +99,6 @@ public class Room {
 		doors[direction] = door;
 	}
 	
-	public void removeMonster(int index) {
-		monstersChanged = true;
-		monsters.remove(index);
-	}
-	
 	public void removeItem(int index) {
 		itemsChanged = true;
 		roomItems.remove(index);
@@ -115,12 +113,13 @@ public class Room {
 		roomItems.add(newItem);
 	}
 	
-	public void killMonster(int target) {
-		
-		roomItems.addAll(monsters.get(target).getHeldItems());
-		itemsChanged = true;
-		
-		monsters.remove(target);
-		monstersChanged = true;
+	public void killMonster() {
+		if (monster != null) {
+			roomItems.addAll(monster.getHeldItems());
+			itemsChanged = true;
+			
+			monster = null;
+			hasMonster = false;
+		}
 	}
 }

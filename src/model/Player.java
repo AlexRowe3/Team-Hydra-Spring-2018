@@ -45,7 +45,6 @@ public class Player extends Character{
 	
 	public boolean checkRoomChanged() {
 		if(roomChanged) {
-			roomChanged = false;
 			return true;
 		} else {
 			return false;
@@ -91,6 +90,7 @@ public class Player extends Character{
 	}
 	
 	public Room getChangedRoom() {
+		roomChanged = false;
 		return currentRoom;
 	}
 	
