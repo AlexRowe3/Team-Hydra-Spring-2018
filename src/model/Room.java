@@ -14,7 +14,6 @@ public class Room {
 	//private Artifact[] artifacts;
 	private Door[] doors = new Door[8];
 	
-	
 	//List of values representing each direction in the code. for use in the connected rooms check
 	public static final int NORTH = 0;
 	public static final int NORTHEAST = 1;
@@ -24,6 +23,10 @@ public class Room {
 	public static final int SOUTHWEST = 5;
 	public static final int WEST = 6;
 	public static final int NORTHWEST = 7;
+	
+	private boolean itemsChanged = false;
+	
+	private boolean monstersChanged = false;
 	
 	public Room (String roomUniqueID, String roomName, String roomType, String roomDescription, ArrayList<GenericItem> roomItems, 
 			String roomSearch, ArrayList<Monster> monsters) {
@@ -57,6 +60,7 @@ public class Room {
 	}
 	
 	public ArrayList<Monster> getMonsterList() {
+		monstersChanged = false;
 		return monsters;
 	}
 	
@@ -66,6 +70,14 @@ public class Room {
 	
 	public ArrayList<GenericItem> getRoomItems() {
 		return roomItems;
+	}
+	
+	public boolean checkItemsChanged() {
+		return itemsChanged;
+	}
+	
+	public boolean checkMonstersChanged() {
+		return monstersChanged;
 	}
 	
 	public boolean checkDirection(int direction) {
@@ -85,10 +97,12 @@ public class Room {
 	}
 	
 	public void removeMonster(int index) {
+		monstersChanged = true;
 		monsters.remove(index);
 	}
 	
 	public void removeItem(int index) {
+		itemsChanged = true;
 		roomItems.remove(index);
 	}
 
@@ -97,6 +111,16 @@ public class Room {
 	}
 	
 	public void addItem(GenericItem newItem) {
+		itemsChanged = true;
 		roomItems.add(newItem);
+	}
+	
+	public void killMonster(int target) {
+		
+		roomItems.addAll(monsters.get(target).getHeldItems());
+		itemsChanged = true;
+		
+		monsters.remove(target);
+		monstersChanged = true;
 	}
 }

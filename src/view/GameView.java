@@ -52,12 +52,12 @@ public class GameView implements Observer {
 	private ListView<Button> dynamicBtnLView = new ListView<>();
 	
 	// Player stats for the player info section
-	Label DplayerInfoLbl = new Label("");
-	Label DhpLbl = new Label("");
-	Label DlvlLbl = new Label("");
-	Label DxpLbl = new Label("");
-	Label DweaponLbl = new Label("Nothing");
-	Label DarmorLbl = new Label("Nothing");
+	private Label DplayerInfoLbl = new Label("");
+	private Label DhpLbl = new Label("");
+	private Label DlvlLbl = new Label("");
+	private Label DxpLbl = new Label("");
+	private Label DweaponLbl = new Label("Nothing");
+	private Label DarmorLbl = new Label("Nothing");
 	
 	//This is purely for the actionlisteners. DO NOT USE IT OUTSIDE OF AN ACTION LISTENER.
 	private Model model;
@@ -81,7 +81,7 @@ public class GameView implements Observer {
 		Scene scene = new Scene(pane);
 		stage.setScene(scene);
 		// TODO: fix the title
-		stage.setTitle("Game Title Goes Here");
+		stage.setTitle("Sea Oddesey");
 		//I want the game to be non-resize-able and maximized.  I can change it, but it will change the appearance too
 		stage.setMaximized(true);
 		stage.setResizable(false);
@@ -340,7 +340,7 @@ public class GameView implements Observer {
 			}
 			if (model.checkHealthChanged(Model.PLAYER)) {
 				
-				DhpLbl.setText("" + model.getHealth(Model.PLAYER, Model.CURRENT));
+				DhpLbl.setText(model.getHealth(Model.PLAYER, Model.CURRENT) + " / " + model.getHealth(Model.PLAYER, Model.MAX));
 			}
 			if (model.checkArmorChanged()) {
 				
@@ -353,6 +353,7 @@ public class GameView implements Observer {
 			if (model.checkLevelChanged()) {
 				
 				DlvlLbl.setText("" + model.getLevel());
+				textOutputLView.getItems().add("You Leveled Up!");
 			}
 			if(model.checkExpChanged()) {
 				

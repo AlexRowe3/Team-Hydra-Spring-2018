@@ -10,7 +10,7 @@ public class Character extends Observable {
 	private int currentHealthPoints;
 	private int strength;
 	private int defense;
-	protected ArrayList<GenericItem> heldItems;
+	private ArrayList<GenericItem> heldItems;
 	private String description;
 	
 	// Variables for use in the MVC to help identify what to update:

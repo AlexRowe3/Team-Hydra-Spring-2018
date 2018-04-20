@@ -200,22 +200,22 @@ public class InventoryView implements Observer{
 	}
 
 	@Override
-	public void update(Observable o, Object arg) {
+	public void update(Observable o, Object a) {
 		
-		if (arg instanceof Player) {
+		if (a instanceof Player) {
 			
-			if (((Player) arg).getInventoryChanged() && (type == PLAYER)) {
+			if (((Player) a).getInventoryChanged() && (type == PLAYER)) {
 				
-				itemList.getItems().setAll(((Player) arg).getHeldItems());
+				itemList.getItems().setAll(((Player) a).getHeldItems());
 				
-			} else if(((Player)arg).checkRoomChanged() && (type == ROOM)) {
+			} else if(((Player)a).checkRoomChanged() && (type == ROOM)) {
 				
 				stage.close();
 			}
 			
-		} else if (arg instanceof Room && type == ROOM) {
+		} else if (a instanceof Room && type == ROOM && ((Room) a).checkItemsChanged()) {
 			
-			itemList.getItems().setAll(((Room) arg).getRoomItems());
+			itemList.getItems().setAll(((Room) a).getRoomItems());
 			
 		}
 	}
