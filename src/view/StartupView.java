@@ -92,7 +92,13 @@ public class StartupView extends Application{
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				//TODO: open a new window to list the available saves? check the documentation.
+				try {
+					LoadView loadview = new LoadView();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 			}
 			
 		});
