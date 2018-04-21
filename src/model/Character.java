@@ -64,10 +64,6 @@ public class Character extends Observable {
 		return currentHealthPoints;
 	}
 	
-	public void attack() {
-		// TODO figure out how to handle this.  Might have nothing to do with characters?
-	}
-	
 	public void changeHealth(int effect) {
 		if(effect > 0 && effect > (maxHealthPoints - currentHealthPoints)) {
 			currentHealthPoints = maxHealthPoints;
@@ -103,6 +99,14 @@ public class Character extends Observable {
 	
 	public void changeMaxHealth(int change) {
 		healthChanged = true;
-		
+	}
+	
+	protected void addSTR() {
+		strength++;
+	}
+	
+	protected void addHP() {
+		maxHealthPoints += 10;
+		healthChanged = true;
 	}
 }

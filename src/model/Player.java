@@ -6,7 +6,7 @@ public class Player extends Character{
 	
 	private Armor equippedArmor;
 	private Weapon equippedWeapon;
-	private int level = 0;
+	private int level = 1;
 	private Room currentRoom;
 	private int experience;
 	
@@ -15,7 +15,8 @@ public class Player extends Character{
 	private boolean weaponChanged = false;
 	private boolean armorChanged = false;
 	private boolean xpChanged = true;
-	private boolean lvlChanged = true;
+	private boolean lvlChanged = false;
+	private boolean isAlive = true;
 	
 	public Player(String UID, String name, int healthPoints, int strength, int defense, ArrayList<GenericItem> heldItems,
 			int experience, String description, Armor equippedArmor, Weapon equippedWeapon, int level,
@@ -27,6 +28,10 @@ public class Player extends Character{
 		this.level = level;
 		this.currentRoom = currentRoom;
 		changeRoom(currentRoom);
+	}
+	
+	public boolean checkIsAlive() {
+		return isAlive;
 	}
 	
 	public Armor getArmor() {
@@ -112,10 +117,13 @@ public class Player extends Character{
 		return experience;
 	}
 	
-	private void levelUp() {
+	private void levelUp(int reqExpForLevel) {
 		level++;
-		// TODO: add the other things that change with level
-		// HP, STR, DEF, etc.
+		
+		addSTR();
+		addHP();
+		
+		experience = experience % reqExpForLevel;
 		lvlChanged = true;
 	}
 	
@@ -126,8 +134,22 @@ public class Player extends Character{
 		// TODO: set the actual level up timings from the SRS, here's the template
 		// This is for IF you needed to have 1000 xp to get to level 3.  I'd rather not use a else if,
 		// in case the player gets enough xp to level up multiple times in one fight.  Somehow 
-		if(experience > 999 && level == 2) {
-			levelUp();
+		
+		if (experience >= 10 && level == 1) {
+			levelUp(10);
 		}
+		if (experience >= 20 && level == 2) {
+			levelUp(20);
+		}
+		if (experience >= 40 && level == 3) {
+			levelUp(40);
+		}
+		if (experience >= 80 && level == 4) {
+			levelUp(80);
+		}
+	}
+	
+	public void die() {
+		isAlive = false;
 	}
 }

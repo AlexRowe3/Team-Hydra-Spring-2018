@@ -3,7 +3,7 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
-
+import java.util.Random;
 // Used for reading the default game state from files.
 import java.io.FileReader;
 import java.io.IOException;
@@ -38,6 +38,9 @@ public class Model extends Observable implements Serializable {
 	// used for deciding which type of health you are looking for
 	public static final boolean CURRENT = true;
 	public static final boolean MAX = false;
+	
+	// used for the combat section (random values are necessary)
+	private Random rand = new Random();
 	
 	public Model() {
 		
@@ -635,14 +638,59 @@ public class Model extends Observable implements Serializable {
 	}
 
 	public void attack() {
-		// TODO: handle
 		
+		// Player attack roll (this variable will be re-used for the monster's)
+		int attRoll = rand.nextInt(19) + 1;
+		
+		if(player.getWeapon() != null) {
+			attRoll += player.getWeapon().getAttackBonus();
+		}
+		
+		if(attRoll > player.getCurrentRoom().getMonster().getDefense()) {
+			player.getCurrentRoom().getMonster().changeHealth(-1 * player.getStrength());
+			
+			if(player.getWeapon() != null) {
+				player.getCurrentRoom().getMonster().changeHealth(-1 * player.getWeapon().getStrength());
+			}
+		}
+		
+		attRoll = rand.nextInt(19) + 1;
+		
+		if (player.getArmor() != null) {
+			if(attRoll > (player.getDefense() + player.getArmor().getArmorValue())) {
+				player.changeHealth(-1 * player.getCurrentRoom().getMonster().getStrength());
+			}
+		} else {
+			if(attRoll > player.getDefense()) {
+				player.changeHealth(-1 * player.getCurrentRoom().getMonster().getStrength());
+			}
+		}
+		
+		if(player.getCurrentHealth() <= 0) {
+			player.die();
+			setChanged();
+			notifyObservers(player);
+		}
+		
+		if(player.getCurrentRoom().getMonster().getCurrentHealth() <= 0) {
+			// monster is dead, give xp to player
+			player.increaseXp(player.getCurrentRoom().getMonster().getExperience());
+			
+			// remove monster
+			player.getCurrentRoom().killMonster();
+			
+			// notify observers
+			setChanged();
+			notifyObservers(player.getCurrentRoom());
+		} else {
+			setChanged();
+			notifyObservers(player.getCurrentRoom().getMonster());
+		}
 	}
 
 	public void prepareCombat() {
 		setChanged();
 		notifyObservers(player.getCurrentRoom().getMonster());
-		
 	}
 
 }

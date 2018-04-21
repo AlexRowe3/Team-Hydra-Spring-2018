@@ -171,10 +171,10 @@ public class CombatView implements Observer{
 		} else if (a == null) {
 			
 			
-		} else if (a instanceof Room && !((Room) a).checkHasMonster()) {
-			
-			stage.close();
-			
+		} else if (a instanceof Room) {
+			if (!((Room) a).checkHasMonster()) {
+				stage.close();
+			}
 		} else if (a instanceof Monster) {
 			
 			// the only time a monster is sent as a notification is for the start of combat!
