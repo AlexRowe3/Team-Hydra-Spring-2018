@@ -2,27 +2,31 @@ package model;
 
 public class Puzzle {
 	
-	private int puzzleUniqueID;
-	private Room location;
+	private String puzzleUniqueID;
 	private String description;
 	private String puzzleQuestion;
 	private String puzzleSolution;
 	private String puzzleHint;
 	
-	public Puzzle(int puzzleUniqueID, Room location, String description, String puzzleQuestion, String puzzleSolution,
+	public Puzzle(String puzzleUniqueID, String description, String puzzleQuestion, String puzzleSolution,
 			String puzzleHint) {
 		this.puzzleUniqueID = puzzleUniqueID;
-		this.location = location;
 		this.description = description;
 		this.puzzleQuestion = puzzleQuestion;
 		this.puzzleSolution = puzzleSolution;
 		this.puzzleHint = puzzleHint;
 	}
 	
+	public boolean checkSolution(String input) {
+		if(puzzleSolution.equals(input)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
-	public boolean checkSolution() {
-		return true;
-		
+	public String getUID() {
+		return puzzleUniqueID;
 	}
 	
 	public String getDescription() {

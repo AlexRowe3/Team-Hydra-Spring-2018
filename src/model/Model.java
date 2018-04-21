@@ -52,7 +52,7 @@ public class Model extends Observable implements Serializable {
 		
 		loadNewMonsters();
 		
-		loadNewPuzzles();
+		// TODO: loadNewPuzzles();
 		
 		loadNewRooms();
 		
@@ -118,7 +118,6 @@ public class Model extends Observable implements Serializable {
 	}
 
 	private void loadNewPuzzles() {
-		// TODO: Finish the file reading for the Monsters
 		String fileName = ".\\src\\docs\\Puzzle.txt";
 		String line = null;
 		
@@ -127,13 +126,23 @@ public class Model extends Observable implements Serializable {
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			
 			while((line = bufferedReader.readLine()) != null) {
-				
 				if(!line.startsWith("~")) {
 					
+					String UID = line.substring(10, line.length()-1);
+					line = bufferedReader.readLine();
+					
+					String desc = line.substring(13, line.length()-1);
+					line = bufferedReader.readLine();
+					
+					String puzzle = line.substring(8, line.length()-1);
+					line = bufferedReader.readLine();
+					
+					String solution = line.substring(10, line.length()-1);
+					line = bufferedReader.readLine();
+					
+					// TODO: read what gets done??
 				}
-				
 			}
-			
 			bufferedReader.close();
 			fileReader.close();
 		} catch(FileNotFoundException ex) {
@@ -182,11 +191,8 @@ public class Model extends Observable implements Serializable {
 						addDoor(UID, room1, room2, locked, keyID);
 						
 					}
-					
 				}
-				
 			}
-			
 			bufferedReader.close();
 			fileReader.close();
 		} catch(FileNotFoundException ex) {
@@ -303,7 +309,6 @@ public class Model extends Observable implements Serializable {
 					rooms.add(new Room(UID, Name, Type, description, roomItems, search, monsters));
 				}
 			}
-			
 			bufferedReader.close();
 			fileReader.close();
 		} catch(FileNotFoundException ex) {
@@ -311,8 +316,6 @@ public class Model extends Observable implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		
 	}
 
 	private Monster retrieveMonster(String UIDList) {
@@ -324,7 +327,6 @@ public class Model extends Observable implements Serializable {
 				out = monsters.get(i);
 			}
 		}
-		
 		return out;
 	}
 
@@ -348,8 +350,6 @@ public class Model extends Observable implements Serializable {
 						}
 					}
 				}
-				
-				
 			} else {
 				
 				for(int j = 0; j < items.size(); j++) {
@@ -692,5 +692,32 @@ public class Model extends Observable implements Serializable {
 		setChanged();
 		notifyObservers(player.getCurrentRoom().getMonster());
 	}
-
+	
+	public void useItem(int selectedIndex, int itemHolder) {
+		if(itemHolder == PLAYER) {
+			if(player.getItem(selectedIndex) instanceof Consumable) {
+				
+				player.changeHealth(((Consumable) (player.getItem(selectedIndex))).consume());
+				player.removeItem(selectedIndex);
+				
+			} else if(player.getItem(selectedIndex) instanceof Useable) {
+				// TODO: Figure this out
+			} else {
+				setChanged();
+				notifyObservers(null);
+			}
+		} else if (itemHolder == ROOM) {
+			if (player.getCurrentRoom().getRoomItem(selectedIndex) instanceof Consumable) {
+				
+				player.changeHealth(((Consumable) (player.getCurrentRoom().getRoomItem(selectedIndex))).consume());
+				player.getCurrentRoom().removeItem(selectedIndex);
+				
+			} else if(player.getCurrentRoom().getRoomItem(selectedIndex) instanceof Useable) {
+				// TODO: Figure this out
+			} else {
+				setChanged();
+				notifyObservers(null);
+			}
+		}
+	}
 }
