@@ -26,6 +26,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.GenericItem;
@@ -62,10 +63,13 @@ public class GameView implements Observer {
 	//This is purely for the actionlisteners. DO NOT USE IT OUTSIDE OF AN ACTION LISTENER.
 	private Model model;
 	
+	//This is for telling things who the parent stage is
+	private Stage stage;
+	
 	public GameView(Model model) {
 		this.model = model;
 		
-		Stage stage = new Stage();
+		stage = new Stage();
 		
 		Pane pane = new Pane();
 		
@@ -117,7 +121,8 @@ public class GameView implements Observer {
 			public void handle(ActionEvent arg0) {
 				
 				try {
-					InventoryView iv = new InventoryView(model.getPlayerItems(), model, "Player Inventory", InventoryView.PLAYER);
+					Stage ivStage = new Stage();
+					InventoryView iv = new InventoryView(model.getPlayerItems(), model, "Player Inventory", InventoryView.PLAYER, ivStage);
 					model.addObserver(iv);
 					
 				} catch (Exception e) {
@@ -140,7 +145,8 @@ public class GameView implements Observer {
 			@Override
 			public void handle(ActionEvent arg0) {
 				try {
-					InventoryView iv = new InventoryView(model.getRoom().getRoomItems(), model, "Room Inventory", InventoryView.ROOM);
+					Stage ivStage = new Stage();
+					InventoryView iv = new InventoryView(model.getRoom().getRoomItems(), model, "Room Inventory", InventoryView.ROOM, ivStage);
 					model.addObserver(iv);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -335,13 +341,14 @@ public class GameView implements Observer {
 				
 				textOutputLView.getItems().add(((Player) a).getChangedRoom().getDescription());	
 				
-				if (((Player) a).getCurrentRoom().checkHasMonster()) {
+				if (((Player) a).getCurrentRoom().getMonster() != null) {
 					
-					CombatView cv = new CombatView(model);
+					Stage cvStage = new Stage();
+					cvStage.initOwner(stage);
+					cvStage.initModality(Modality.WINDOW_MODAL);
+					CombatView cv = new CombatView(model, cvStage);
 					model.addObserver(cv);
-					
-					model.prepareCombat();
-					
+					model.prepareCombat();	
 				}
 			}
 			if (model.checkHealthChanged(Model.PLAYER)) {

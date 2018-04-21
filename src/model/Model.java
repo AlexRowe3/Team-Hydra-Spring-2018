@@ -298,6 +298,10 @@ public class Model extends Observable implements Serializable {
 					String description = line.substring(13, line.length()-1);
 					line = bufferedReader.readLine();
 					
+					// TODO: implement this into the rooms
+					String puzzleID = line.substring(8, line.length()-1);
+					line = bufferedReader.readLine();
+					
 					ArrayList<GenericItem> roomItems = retrieveItems(line.substring(7, line.length()-1).split(","));
 					line = bufferedReader.readLine();
 					

@@ -42,12 +42,12 @@ public class InventoryView implements Observer{
 	// used simply for the controller located here
 	private Model model;
 	
-	public InventoryView(ArrayList<GenericItem> items, Model model, String title, boolean type) throws Exception {
+	public InventoryView(ArrayList<GenericItem> items, Model model, String title, boolean type, Stage stage) throws Exception {
 		
 		this.model = model;
 		this.type = type;
 		
-		stage = new Stage();
+		this.stage = stage;
 		Pane pane = new Pane();
 		
 		vBox = new VBox();

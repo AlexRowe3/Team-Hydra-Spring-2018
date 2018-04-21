@@ -26,7 +26,6 @@ public class Room {
 	
 	// For use with communicating with the controller (identifying what's changed)
 	private boolean itemsChanged = false;
-	private boolean hasMonster = false;
 	
 	public Room (String roomUniqueID, String roomName, String roomType, String roomDescription, ArrayList<GenericItem> roomItems, 
 			String roomSearch, Monster monster) {
@@ -40,10 +39,6 @@ public class Room {
 		
 		for(int i = 0; i < doors.length; i++) {
 			doors[i] = null;
-		}
-		
-		if (monster != null) {
-			hasMonster = true;
 		}
 	}
 	
@@ -77,10 +72,6 @@ public class Room {
 	
 	public boolean checkItemsChanged() {
 		return itemsChanged;
-	}
-	
-	public boolean checkHasMonster() {
-		return hasMonster;
 	}
 	
 	public boolean checkDirection(int direction) {
@@ -119,7 +110,6 @@ public class Room {
 			itemsChanged = true;
 			
 			monster = null;
-			hasMonster = false;
 		}
 	}
 }

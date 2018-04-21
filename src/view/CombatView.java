@@ -35,9 +35,9 @@ public class CombatView implements Observer{
 	private Label DmonsterInfoLbl = new Label("");
 	private Label DMhpLbl = new Label("");
 	
-	public CombatView(Model model) {
+	public CombatView(Model model, Stage stage) {
 		this.model = model;
-		stage = new Stage();
+		this.stage = stage;
 		Pane pane = new Pane();
 		
 		VBox bigBox = new VBox();
@@ -98,9 +98,9 @@ public class CombatView implements Observer{
 		pane.getChildren().add(bigBox);
 		
 		Scene scene = new Scene(pane);
-		stage.setTitle("Combat Window");
-		stage.setScene(scene);
-		stage.show();
+		this.stage.setTitle("Combat Window");
+		this.stage.setScene(scene);
+		this.stage.show();
 	}
 
 	private Button generateCheckInventoryButton() {
@@ -112,18 +112,16 @@ public class CombatView implements Observer{
 			public void handle(ActionEvent arg0) {
 				
 				try {
-					InventoryView iv = new InventoryView(model.getPlayerItems(), model, "Player Inventory", InventoryView.PLAYER);
+					Stage ivStage = new Stage();
+					InventoryView iv = new InventoryView(model.getPlayerItems(), model, "Player Combat Inventory", InventoryView.PLAYER, ivStage);
 					model.addObserver(iv);
 					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
 			}
-			
 		});
-		
 		return button;
 	}
 	
@@ -172,7 +170,7 @@ public class CombatView implements Observer{
 			
 			
 		} else if (a instanceof Room) {
-			if (!((Room) a).checkHasMonster()) {
+			if (((Room) a).getMonster() == null) {
 				stage.close();
 			}
 		} else if (a instanceof Monster) {
