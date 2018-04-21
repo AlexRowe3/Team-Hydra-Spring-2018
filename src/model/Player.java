@@ -122,6 +122,7 @@ public class Player extends Character{
 		
 		addSTR();
 		addHP();
+		fullHeal();
 		
 		experience = experience % reqExpForLevel;
 		lvlChanged = true;

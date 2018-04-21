@@ -3,6 +3,7 @@ package view;
 import java.util.Observable;
 import java.util.Observer;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -13,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.Model;
 import model.Monster;
 import model.Player;
@@ -97,6 +99,18 @@ public class CombatView implements Observer{
 		
 		pane.getChildren().add(bigBox);
 		
+		/** This code is here to help handle the closeable combat window issue */
+		Platform.setImplicitExit(false);
+
+		this.stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+		    @Override
+		    public void handle(WindowEvent event) {
+		        event.consume();
+		    }
+		});
+		
+		
+		
 		Scene scene = new Scene(pane);
 		this.stage.setTitle("Combat Window");
 		this.stage.setScene(scene);
@@ -132,8 +146,10 @@ public class CombatView implements Observer{
 			
 			@Override
 			public void handle(ActionEvent arg0) {
-				
-				model.attack();
+				// only attack if the player is alive
+				if (model.checkIsAlive()) {
+					model.attack();
+				}
 			}
 			
 		});
@@ -164,6 +180,17 @@ public class CombatView implements Observer{
 			if(model.checkExpChanged()) {
 				
 				DxpLbl.setText("" + model.getExp(Model.PLAYER));
+			}
+			
+			if(!model.checkIsAlive()) {
+				
+				// remove the normal lock on closing the windows
+				stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+				    @Override
+				    public void handle(WindowEvent event) {
+				        
+				    }
+				});
 			}
 			
 		} else if (a == null) {

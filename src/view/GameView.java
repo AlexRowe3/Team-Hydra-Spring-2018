@@ -31,6 +31,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.GenericItem;
 import model.Model;
+import model.Monster;
 import model.Player;
 // This import is needed for the Action listeners as well as the Room connection indexes.
 import model.Room;
@@ -284,15 +285,15 @@ public class GameView implements Observer {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				
-				if(model.checkDirection(direction)) {
-					
-					model.movePlayer(direction);
-					
-				} else {
-					
-					textOutputLView.getItems().add("You can't go that way!");
-					
+				// only allow the player to move if they are alive
+				if(model.checkIsAlive()) {
+					if(model.checkDirection(direction)) {
+						
+						model.movePlayer(direction);
+					} else {
+						
+						textOutputLView.getItems().add("You can't go that way!");
+					}
 				}
 			}
 		});
@@ -306,24 +307,25 @@ public class GameView implements Observer {
 
 			@Override
 			public void handle(ActionEvent arg0) {
-				
-				ObjectOutputStream oos;
-				
-				LocalTime.now();
-				File saveFile = new File(".\\src\\saves\\" + (new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + LocalTime.now().getHour() + LocalTime.now().getMinute()+".bin"));
-				
-				
-				try {
-					if(saveFile.exists()) {
-						oos = new ObjectOutputStream(new FileOutputStream(saveFile));
-						oos.writeObject(model);
-						oos.close();
+				if (model.checkIsAlive()) {
+					ObjectOutputStream oos;
+					
+					LocalTime.now();
+					File saveFile = new File(".\\src\\saves\\" + (new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + LocalTime.now().getHour() + LocalTime.now().getMinute()+".bin"));
+					
+					
+					try {
+						if(saveFile.exists()) {
+							oos = new ObjectOutputStream(new FileOutputStream(saveFile));
+							oos.writeObject(model);
+							oos.close();
+						}
+					
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
 					}
-				
-				} catch (FileNotFoundException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
 				}
 			}
 			
@@ -334,52 +336,64 @@ public class GameView implements Observer {
 
 	@Override
 	public void update(Observable o, Object a) {
-		
-		if (a instanceof Player) {
-			
-			if (model.checkRoomChanged()) {
+		if (model.checkIsAlive()) {
+			if (a instanceof Player) {
 				
-				textOutputLView.getItems().add(((Player) a).getChangedRoom().getDescription());	
-				
-				if (((Player) a).getCurrentRoom().getMonster() != null) {
+				if (model.checkRoomChanged()) {
 					
-					Stage cvStage = new Stage();
-					cvStage.initOwner(stage);
-					cvStage.initModality(Modality.WINDOW_MODAL);
-					CombatView cv = new CombatView(model, cvStage);
-					model.addObserver(cv);
-					model.prepareCombat();	
+					textOutputLView.getItems().add(((Player) a).getChangedRoom().getDescription());	
+					
+					if (((Player) a).getCurrentRoom().getMonster() != null) {
+						
+						Stage cvStage = new Stage();
+						cvStage.initOwner(stage);
+						cvStage.initModality(Modality.WINDOW_MODAL);
+						CombatView cv = new CombatView(model, cvStage);
+						model.addObserver(cv);
+						model.prepareCombat();	
+					}
 				}
-			}
-			if (model.checkHealthChanged(Model.PLAYER)) {
 				
-				DhpLbl.setText(model.getHealth(Model.PLAYER, Model.CURRENT) + " / " + model.getHealth(Model.PLAYER, Model.MAX));
-			}
-			if (model.checkArmorChanged()) {
+				if (model.checkArmorChanged()) {
+					
+					DarmorLbl.setText(model.getArmor().getName());
+					
+				}
+				if (model.checkWeaponChanged()) {
+					
+					DweaponLbl.setText(model.getWeapon().getName());
+					
+				}
+				if (model.checkLevelChanged()) {
+					
+					textOutputLView.getItems().add("You Leveled Up!");
+				}
 				
-				DarmorLbl.setText(model.getArmor().getName());
-			}
-			if (model.checkWeaponChanged()) {
-				
-				DweaponLbl.setText(model.getWeapon().getName());
-			}
-			if (model.checkLevelChanged()) {
-				
+				// I've decided I want to load this stuff regardless of the situation as long as player is sent
+				DxpLbl.setText("" + model.getExp(Model.PLAYER));
 				DlvlLbl.setText("" + model.getLevel());
-				textOutputLView.getItems().add("You Leveled Up!");
-			}
-			if(model.checkExpChanged()) {
+				DhpLbl.setText(model.getHealth(Model.PLAYER, Model.CURRENT) + " / " + model.getHealth(Model.PLAYER, Model.MAX));
+				
+			} else if (a instanceof GenericItem) {
+				
+				textOutputLView.getItems().add(((GenericItem) a).getDescription());
+				
+			} else if (a == null) {
+				
+				textOutputLView.getItems().add("You can't do that!");
+			} else if (a instanceof Monster) {
 				
 				DxpLbl.setText("" + model.getExp(Model.PLAYER));
+				DlvlLbl.setText("" + model.getLevel());
+				DhpLbl.setText(model.getHealth(Model.PLAYER, Model.CURRENT) + " / " + model.getHealth(Model.PLAYER, Model.MAX));
+				
+			} else if (a instanceof Room) {
+				// This is the message sent at the end of combat, so load the exp and lvl
+				DlvlLbl.setText("" + model.getLevel());
+				DxpLbl.setText("" + model.getExp(Model.PLAYER));
 			}
-			
-		} else if (a instanceof GenericItem) {
-			
-			textOutputLView.getItems().add(((GenericItem) a).getDescription());
-			
-		} else if (a == null) {
-			
-			textOutputLView.getItems().add("You can't do that!");
+		} else {
+			textOutputLView.getItems().add("You can't do anything while dead!");
 		}
 	}
 

@@ -724,4 +724,8 @@ public class Model extends Observable implements Serializable {
 			}
 		}
 	}
+
+	public boolean checkIsAlive() {
+		return player.checkIsAlive();
+	}
 }

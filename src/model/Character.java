@@ -109,4 +109,9 @@ public class Character extends Observable {
 		maxHealthPoints += 10;
 		healthChanged = true;
 	}
+	
+	protected void fullHeal() {
+		currentHealthPoints = maxHealthPoints;
+		healthChanged = true;
+	}
 }
