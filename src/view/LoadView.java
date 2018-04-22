@@ -15,6 +15,8 @@ import java.util.Observer;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -59,8 +61,10 @@ public class LoadView implements Observer{
 		
 		populate(saves);
 		
-		loadSaveFile = new Button("Load Game");
-		cancel = new Button("Cancel");
+		oSaveList = FXCollections.observableArrayList(saves);
+		saveList = new ListView<Model>(oSaveList);
+		
+		loadSaveFile = generateLoadButton(saveList);
 		
 		hBox = new HBox();
 		hBox.setPadding(new Insets(5,5,5,5));
@@ -70,9 +74,7 @@ public class LoadView implements Observer{
 		vBox = new VBox();
 		vBox.setPadding(new Insets(5,5,5,5));
 		label = new Label("Select a save file: ");
-		
-		oSaveList = FXCollections.observableArrayList(saves);
-		saveList = new ListView<Model>(oSaveList);
+	
 		
 		vBox.getChildren().add(label);
 		vBox.getChildren().add(saveList);
@@ -121,6 +123,28 @@ public class LoadView implements Observer{
 		}
 		
 	}
+	
+	private Button generateLoadButton(ListView<Model> lvm) {
+		
+		Button loadGame = new Button("Load");
+		
+		loadGame.setOnAction(new EventHandler<ActionEvent>() {
+	
+			@Override
+			public void handle(ActionEvent arg0) {
+				Model model = lvm.getSelectionModel().getSelectedItem();
+				GameView gameview = new GameView(model);
+				model.addObserver(gameview);
+				model.loadNewGame();
+				stage.hide();
+			}
+			
+		});
+		
+		return loadGame;
+	}
+	
+
 
 	@Override
 	public void update(java.util.Observable arg0, Object arg1) {
