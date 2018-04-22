@@ -35,7 +35,7 @@ Description:”Reflection all around, you looked down to see a image of you below.
 Puzzle:”I’m made of glass, this much is true, but when you look, you won’t see through.”
 Solution:"Mirror"
 Hint:"Reflect on this hint, and you’ll find a clue."
-Reward:"Player receives metal sheet (x5)"
+Reward:"MTST:5"
 ~
 UniqueID:"PZ06"
 Description:”While looking at the marvels of a lost civilization, you stumble upon some wall writing. At least you can translate.”

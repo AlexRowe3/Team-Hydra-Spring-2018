@@ -66,7 +66,7 @@ Name:"Cavern 4"
 Type:"Cavern"
 Description:"You can rest a bit but something piques your interest. at the south west direction it is a long travel to the next depth level of water."
 Puzzle:"PZ02"
-Items:"DTGN"
+Items:""
 Search:"It looks like there may be a pistol grip buried in the sand."
 Monster:""
 ~

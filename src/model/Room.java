@@ -11,6 +11,7 @@ public class Room {
 	private ArrayList<GenericItem> roomItems;
 	private String roomSearch;
 	private Monster monster;
+	private Puzzle puzzle;
 	//private Artifact[] artifacts;
 	private Door[] doors = new Door[8];
 	
@@ -28,7 +29,7 @@ public class Room {
 	private boolean itemsChanged = false;
 	
 	public Room (String roomUniqueID, String roomName, String roomType, String roomDescription, ArrayList<GenericItem> roomItems, 
-			String roomSearch, Monster monster) {
+			String roomSearch, Monster monster, Puzzle puzzle) {
 		this.roomUniqueID = roomUniqueID;
 		this.roomName = roomName;
 		this.roomType = roomType;
@@ -36,6 +37,7 @@ public class Room {
 		this.roomItems = roomItems;
 		this.roomSearch = roomSearch;
 		this.monster = monster;
+		this.puzzle = puzzle;
 		
 		for(int i = 0; i < doors.length; i++) {
 			doors[i] = null;
@@ -108,8 +110,20 @@ public class Room {
 		if (monster != null) {
 			roomItems.addAll(monster.getHeldItems());
 			itemsChanged = true;
-			
 			monster = null;
 		}
+	}
+	
+	public Puzzle getPuzzle() {
+		return puzzle;
+	}
+	
+	public void removePuzzle() {
+		puzzle = null;
+	}
+
+	public void addAllItems(ArrayList<GenericItem> reward) {
+		roomItems.addAll(reward);
+		itemsChanged = true;
 	}
 }

@@ -33,6 +33,7 @@ import model.GenericItem;
 import model.Model;
 import model.Monster;
 import model.Player;
+import model.Puzzle;
 // This import is needed for the Action listeners as well as the Room connection indexes.
 import model.Room;
 /**
@@ -352,6 +353,17 @@ public class GameView implements Observer {
 						model.addObserver(cv);
 						model.prepareCombat();	
 					}
+					
+					if (((Player) a).getCurrentRoom().getPuzzle() != null) {
+						
+						Stage pvStage = new Stage();
+						pvStage.initOwner(stage);
+						pvStage.initModality(Modality.WINDOW_MODAL);
+						PuzzleView pv = new PuzzleView(model, pvStage);
+						model.addObserver(pv);
+						// model.preparePuzzle(); ?
+					
+					}
 				}
 				
 				if (model.checkArmorChanged()) {
@@ -391,6 +403,12 @@ public class GameView implements Observer {
 				// This is the message sent at the end of combat, so load the exp and lvl
 				DlvlLbl.setText("" + model.getLevel());
 				DxpLbl.setText("" + model.getExp(Model.PLAYER));
+			} else if (a instanceof Puzzle) {
+				if(((Puzzle) a).getSolved()) {
+					textOutputLView.getItems().add("You solved the puzzle!");
+				} else {
+					textOutputLView.getItems().add(((Puzzle) a).getIncorrect());
+				}
 			}
 		} else {
 			textOutputLView.getItems().add("You can't do anything while dead!");

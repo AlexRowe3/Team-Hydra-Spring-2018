@@ -29,6 +29,7 @@ public class Model extends Observable implements Serializable {
 	private ArrayList<Room> rooms = new ArrayList<Room>();
 	private ArrayList<GenericItem> items = new ArrayList<GenericItem>();
 	private ArrayList<Monster> monsters = new ArrayList<Monster>();
+	private ArrayList<Puzzle> puzzles = new ArrayList<Puzzle>();
 	
 	// used for transferring items and checking health changes
 	public static final int ROOM = 0;
@@ -52,7 +53,7 @@ public class Model extends Observable implements Serializable {
 		
 		loadNewMonsters();
 		
-		// TODO: loadNewPuzzles();
+		loadNewPuzzles();
 		
 		loadNewRooms();
 		
@@ -143,7 +144,19 @@ public class Model extends Observable implements Serializable {
 					String hint = line.substring(6, line.length()-1);
 					line = bufferedReader.readLine();
 					
-					String rewardUID = line.substring(8, line.length()-1);
+					// falsifying an array so that it accepts it in the retrieveItems()
+					String[] rewardUID = { line.substring(8, line.length()-1) };
+					line = bufferedReader.readLine();
+					
+					if(!line.startsWith("~")) {
+						
+						String incorrect = line.substring(18, line.length()-1);
+						
+						puzzles.add(new Puzzle(UID, desc, puzzle, solution, hint, retrieveItems(rewardUID), incorrect));
+					} else {
+						
+						puzzles.add(new Puzzle(UID, desc, puzzle, solution, hint, retrieveItems(rewardUID)));
+					}
 				}
 			}
 			bufferedReader.close();
@@ -311,9 +324,9 @@ public class Model extends Observable implements Serializable {
 					String search = line.substring(8, line.length()-1);
 					line = bufferedReader.readLine();
 					
-					Monster monsters = retrieveMonster(line.substring(9, line.length()-1));
+					Monster monster = retrieveMonster(line.substring(9, line.length()-1));
 					
-					rooms.add(new Room(UID, Name, Type, description, roomItems, search, monsters));
+					rooms.add(new Room(UID, Name, Type, description, roomItems, search, monster, retrievePuzzle(puzzleID)));
 				}
 			}
 			bufferedReader.close();
@@ -323,6 +336,18 @@ public class Model extends Observable implements Serializable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private Puzzle retrievePuzzle(String UIDList) {
+		Puzzle out = null;
+	
+		for(int i = 0; i < puzzles.size(); i++) {
+			
+			if(puzzles.get(i).getUID().equals(UIDList)) {
+				out = puzzles.get(i);
+			}
+		}
+		return out;
 	}
 
 	private Monster retrieveMonster(String UIDList) {
@@ -730,5 +755,40 @@ public class Model extends Observable implements Serializable {
 
 	public boolean checkIsAlive() {
 		return player.checkIsAlive();
+	}
+	
+	public Puzzle getPuzzle() {
+		return player.getCurrentRoom().getPuzzle();
+	}
+
+	public void puzzleFail() {
+		// This is meant to send the update message to the main screen
+		setChanged();
+		notifyObservers(getPuzzle());
+	}
+
+	public void truePuzzleFail() {
+		// meant for the non-retryable puzzles
+		Puzzle puzzle = getPuzzle();
+		
+		getRoom().removePuzzle();
+		
+		setChanged();
+		notifyObservers(puzzle);
+	}
+	
+	public void puzzleSolved() {
+		Puzzle puzzle = getPuzzle();
+		
+		puzzle.solve();
+		
+		getRoom().addAllItems(puzzle.getReward());
+		
+		getRoom().removePuzzle();
+		
+		setChanged();
+		notifyObservers(puzzle);
+		setChanged();
+		notifyObservers(getRoom());
 	}
 }
