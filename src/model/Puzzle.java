@@ -20,7 +20,7 @@ public class Puzzle {
 		this.puzzleUniqueID = puzzleUniqueID;
 		this.description = description;
 		this.puzzleQuestion = puzzleQuestion;
-		this.puzzleSolution = puzzleSolution;
+		this.puzzleSolution = puzzleSolution.toLowerCase();
 		this.puzzleHint = puzzleHint;
 		this.reward = reward;
 		this.incorrect = incorrect;
@@ -45,6 +45,10 @@ public class Puzzle {
 		} else {
 			return false;
 		}
+	}
+	
+	public String getSolution() {
+		return puzzleSolution;
 	}
 	
 	public String getUID() {

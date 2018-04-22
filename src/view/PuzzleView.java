@@ -86,6 +86,9 @@ public class PuzzleView implements Observer{
 					
 					if(model.getPuzzle().checkSolution(tf.getText().toLowerCase())) {
 						
+						// TODO: Debug
+						System.out.println("retry puzzle match");
+						
 						// puzzle solved, send reward to room and close window 
 						model.puzzleSolved();
 						stage.close();
@@ -94,11 +97,16 @@ public class PuzzleView implements Observer{
 						
 						model.puzzleFail();
 						
+						// TODO: Debug
+						System.out.println("retry puzzle no match");
 					}
 					
 				} else {
 					
 					if(model.getPuzzle().checkSolution(tf.getText().toLowerCase())) {
+						
+						// TODO: Debug
+						System.out.println("Non-retry puzzle match");
 						
 						// puzzle solved, send reward to room and close window 
 						model.puzzleSolved();
@@ -106,11 +114,12 @@ public class PuzzleView implements Observer{
 						
 					} else {
 						
+						// TODO: Debug
+						System.out.println("Non-retry puzzle no match");
+						
 						model.truePuzzleFail();
 						stage.close();
-						
 					}
-					
 				}
 			}
 		});

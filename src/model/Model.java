@@ -554,7 +554,6 @@ public class Model extends Observable implements Serializable {
 		setChanged();
 		notifyObservers(getRoomItem(selectedIndex));
 	}
-
 	
 	public void transferItem(int selectedIndex, int source) {
 		
@@ -783,6 +782,9 @@ public class Model extends Observable implements Serializable {
 		puzzle.solve();
 		
 		getRoom().addAllItems(puzzle.getReward());
+		
+		//TODO: Debug
+		System.out.println("puzzleSolved()");
 		
 		getRoom().removePuzzle();
 		
