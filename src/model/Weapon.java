@@ -1,6 +1,8 @@
 package model;
 
-public class Weapon extends GenericItem{
+import java.io.Serializable;
+
+public class Weapon extends GenericItem implements Serializable{
 	
 	private int strength;
 	private int attackBonus;

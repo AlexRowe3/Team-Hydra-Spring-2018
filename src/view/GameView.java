@@ -316,11 +316,11 @@ public class GameView implements Observer {
 					
 					
 					try {
-						if(saveFile.exists()) {
+						
 							oos = new ObjectOutputStream(new FileOutputStream(saveFile));
 							oos.writeObject(model);
 							oos.close();
-						}
+						
 					
 					} catch (FileNotFoundException e) {
 						e.printStackTrace();

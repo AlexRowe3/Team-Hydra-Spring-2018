@@ -1,6 +1,8 @@
 package model;
 
-public class Armor extends GenericItem{
+import java.io.Serializable;
+
+public class Armor extends GenericItem implements Serializable{
 	
 	private int defense;
 	

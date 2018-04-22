@@ -1,6 +1,8 @@
 package model;
 
-public class Useable extends GenericItem{
+import java.io.Serializable;
+
+public class Useable extends GenericItem implements Serializable {
 	
 	private String usage;
 	

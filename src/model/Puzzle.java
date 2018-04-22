@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Puzzle {
+public class Puzzle implements Serializable{
 	
 	private String puzzleUniqueID;
 	private String description;

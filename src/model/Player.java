@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Player extends Character{
+public class Player extends Character implements Serializable{
 	
 	private Armor equippedArmor;
 	private Weapon equippedWeapon;

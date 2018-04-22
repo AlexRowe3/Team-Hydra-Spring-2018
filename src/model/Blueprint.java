@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Blueprint extends GenericItem {
+public class Blueprint extends GenericItem implements Serializable{
 	
 	ArrayList<GenericItem> requiredItems;
 	GenericItem output;

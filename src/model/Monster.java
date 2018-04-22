@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Monster extends Character{
+public class Monster extends Character implements Serializable{
 	
 	private int experience;
 	

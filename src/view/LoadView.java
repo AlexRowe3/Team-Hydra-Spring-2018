@@ -98,7 +98,7 @@ public class LoadView implements Observer{
 	// Method to populate the list based on the save file location
 	public static void populate(ArrayList<Model> saves) {
 		
-		Path dir = Paths.get("..\\src\\saves\\");
+		Path dir = Paths.get(".\\src\\saves\\");
 		try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir, "*.bin")){
 			for(Path file : stream) {
 				String file2 = file.toString();

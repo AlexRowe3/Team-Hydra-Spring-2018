@@ -1,6 +1,8 @@
 package model;
 
-public class Consumable extends GenericItem{
+import java.io.Serializable;
+
+public class Consumable extends GenericItem implements Serializable{
 	
 	private int effect;
 	

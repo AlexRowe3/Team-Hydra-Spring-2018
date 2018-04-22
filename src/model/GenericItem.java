@@ -1,6 +1,8 @@
 package model;
 
-public class GenericItem {
+import java.io.Serializable;
+
+public class GenericItem implements Serializable{
 	
 	private String itemName;
 	private String itemShortName;

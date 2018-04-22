@@ -1,9 +1,10 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Observable;
 
-public class Character extends Observable {
+public class Character extends Observable implements Serializable{
 	private String UID;
 	private String name;
 	private int maxHealthPoints;
