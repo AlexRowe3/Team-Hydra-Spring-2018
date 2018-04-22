@@ -19,5 +19,9 @@ public class Blueprint extends GenericItem {
 	public GenericItem getOutput() {
 		return output;
 	}
+
+	public void removeItem(int i) {
+		requiredItems.remove(i);
+	}
 	
 }

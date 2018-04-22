@@ -596,7 +596,6 @@ public class Model extends Observable implements Serializable {
 		}
 	}
 
-
 	public boolean checkHealthChanged(int target) {
 		if(target == PLAYER) {
 			
@@ -732,7 +731,13 @@ public class Model extends Observable implements Serializable {
 				player.removeItem(selectedIndex);
 				
 			} else if(player.getItem(selectedIndex) instanceof Useable) {
+				
 				// TODO: Figure this out
+				
+			} else if (player.getItem(selectedIndex) instanceof Blueprint) {
+				
+				craft(((Blueprint) player.getItem(selectedIndex)));
+				
 			} else {
 				setChanged();
 				notifyObservers(null);
@@ -744,12 +749,61 @@ public class Model extends Observable implements Serializable {
 				player.getCurrentRoom().removeItem(selectedIndex);
 				
 			} else if(player.getCurrentRoom().getRoomItem(selectedIndex) instanceof Useable) {
+				
 				// TODO: Figure this out
+				
+			} else if (getRoom().getRoomItem(selectedIndex) instanceof Blueprint){
+				
+				if(player.getHeldItems().containsAll(((Blueprint) getRoom().getRoomItem(selectedIndex)).getRequiredItems())) {
+					
+					// craft??
+					
+				}
+				
 			} else {
 				setChanged();
 				notifyObservers(null);
 			}
 		}
+	}
+
+	private void craft(Blueprint blueprint) {
+		
+		int currSize = blueprint.getRequiredItems().size();
+		
+		boolean cont = true;
+		
+		while(currSize > 0 && cont) {
+			
+			int foundIndex = -1;
+			
+			for(int i = 0; i < player.getHeldItems().size(); i++) {
+				if(player.getItem(i).equals(blueprint.getRequiredItems().get(0))) {
+					foundIndex = i;
+				}
+			}
+			
+			if(foundIndex == -1) {
+				// quit, as an item wasn't found
+				cont = false;
+			} else {
+				// an item WAS found, so lets remove it from both entities
+				blueprint.removeItem(0);
+				player.removeItem(foundIndex);
+				currSize--;
+			}
+			
+		}
+		
+		if (currSize == 0) {
+			// all items were removed from the blueprint, CRAFT THE ITEM
+			player.addItem(blueprint.getOutput());
+			
+			player.getHeldItems().remove(blueprint);
+		}
+		
+		setChanged();
+		notifyObservers(player);
 	}
 
 	public boolean checkIsAlive() {
