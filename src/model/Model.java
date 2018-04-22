@@ -140,7 +140,10 @@ public class Model extends Observable implements Serializable {
 					String solution = line.substring(10, line.length()-1);
 					line = bufferedReader.readLine();
 					
-					// TODO: read what gets done??
+					String hint = line.substring(6, line.length()-1);
+					line = bufferedReader.readLine();
+					
+					String rewardUID = line.substring(8, line.length()-1);
 				}
 			}
 			bufferedReader.close();
