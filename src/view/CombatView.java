@@ -94,7 +94,9 @@ public class CombatView implements Observer{
 		
 		Button attackBtn = generateAttackButton();
 		
-		buttonHBox.getChildren().addAll(attackBtn, checkInvBtn);
+		Button examineBtn = generateExamineButton();
+		
+		buttonHBox.getChildren().addAll(attackBtn, checkInvBtn, examineBtn);
 		bigBox.getChildren().addAll(monsterHBox, playerHBox, buttonHBox);
 		
 		pane.getChildren().add(bigBox);
@@ -115,6 +117,23 @@ public class CombatView implements Observer{
 		this.stage.setTitle("Combat Window");
 		this.stage.setScene(scene);
 		this.stage.show();
+	}
+
+	private Button generateExamineButton() {
+		Button out = new Button("Examine");
+		
+		out.setOnAction(new EventHandler<ActionEvent>() {
+			
+			@Override
+			public void handle(ActionEvent arg0) {
+				// only attack if the player is alive
+				if (model.checkIsAlive()) {
+					model.examineMonster();
+				}
+			}
+			
+		});
+		return out;
 	}
 
 	private Button generateCheckInventoryButton() {
@@ -153,7 +172,6 @@ public class CombatView implements Observer{
 			}
 			
 		});
-		
 		return out;
 	}
 	

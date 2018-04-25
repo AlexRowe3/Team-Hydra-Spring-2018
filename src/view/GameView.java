@@ -409,6 +409,8 @@ public class GameView implements Observer {
 				} else {
 					textOutputLView.getItems().add(((Puzzle) a).getIncorrect());
 				}
+			} else if (a instanceof String) {
+				textOutputLView.getItems().add(model.getDescription(Model.MONSTER));
 			}
 		} else {
 			textOutputLView.getItems().add("You can't do anything while dead!");

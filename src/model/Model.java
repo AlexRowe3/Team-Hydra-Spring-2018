@@ -837,14 +837,23 @@ public class Model extends Observable implements Serializable {
 		
 		getRoom().addAllItems(puzzle.getReward());
 		
-		//TODO: Debug
-		System.out.println("puzzleSolved()");
-		
 		getRoom().removePuzzle();
 		
 		setChanged();
 		notifyObservers(puzzle);
 		setChanged();
 		notifyObservers(getRoom());
+	}
+
+	public void examineMonster() {
+		setChanged();
+		notifyObservers("Hi");
+	}
+
+	public String getDescription(int target) {
+		if(target == MONSTER) {
+			return player.getCurrentRoom().getMonster().getDescription();
+		}
+		return null;
 	}
 }
